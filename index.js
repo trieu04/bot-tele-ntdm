@@ -1,8 +1,6 @@
 const { Telegraf } = require('telegraf')
 
-app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-});
+const bot = new Telegraf('1921157192:AAGID1EpbU-EBGSe8jxrQSQgfKGi69SMvB8')
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on('sticker', (ctx) => ctx.reply('👍'))
