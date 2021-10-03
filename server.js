@@ -344,13 +344,12 @@ job.start();
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () =>{
+    bot.stop('SIGTERM')
     console.log("Idling...\nSet webhook to https://bot-tele-ntdm.herokuapp.com/telegram");
     bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram');
-    bot.stop('SIGTERM')
 })
 
 const express = require('express')
-// ===Your bot logic here 
 
 // Start app for Heroku
 const app = express()
