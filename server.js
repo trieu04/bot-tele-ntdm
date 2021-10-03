@@ -345,7 +345,7 @@ job.start();
 const PORT = process.env.PORT || 3000;
 
 bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram');
-bot.startWebhook('/telegram', null, PORT)
+bot.startWebhook('/telegram', null, 5000)
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
