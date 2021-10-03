@@ -341,12 +341,13 @@ var job = new CronJob('0 0,12 * * *', function () {
 bot.launch();
 job.start();
 
-
-bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram');
-
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+process.once('SIGTERM', () =>{
+    console.log("Idling...\nSet webhook to https://bot-tele-ntdm.herokuapp.com/telegram");
+    bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram');
+    bot.stop('SIGTERM')
+})
 
 const express = require('express')
 // ===Your bot logic here 
