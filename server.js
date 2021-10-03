@@ -65,7 +65,7 @@ videoScene.on("text", async ctx => {
     )
 
 })
-videoScene.action(/^video:/,async ctx => {
+videoScene.action(/^video:/, async ctx => {
     nav = String(ctx.match.input);
     if (/^video:select=\d+/.test(nav)) {
         select = nav.split("=", 2)[1];
@@ -85,7 +85,7 @@ videoScene.action(/^video:/,async ctx => {
         //     
         // });
         let info = await ytdl.getInfo(yt_id);
-        xx = ytdl.chooseFormat(info.formats, {quality: "highest"})
+        xx = ytdl.chooseFormat(info.formats, { quality: "highest" })
         console.log(xx.url)
         ctx.replyWithVideo(xx.url)
 
@@ -358,7 +358,10 @@ const express = require('express')
 const app = express()
 app.use(express.static('public'))
 app.get('/', function (req, res) {
-  res.send( "QuocTrieuIT" )
+    res.send("QuocTrieuIT")
+})
+app.get('/telegram', function (req, res) {
+    bot.handleUpdate(req.body, res)
 })
 
 // Start server
