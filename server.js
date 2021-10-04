@@ -18,8 +18,7 @@ const token = process.env.BOT_TOKEN
 const report_id = process.env.REPORT_ID
 const admin_id = process.env.ADMIN_ID
 var tele_id;
-// System
-process.env.ILLDING = "1"
+
 // Scense
 const videoScene = new BaseScene("video");
 videoScene.enter(ctx => {
@@ -325,7 +324,7 @@ function system_check() {
         + `RAM Usage: ${ram_used}MB / ${ram_total}MB, ${Math.round(10000 * ram_used / ram_total) / 100}%` + eol
         + `CPU Usage: ${perc}%`
 }
-function opps() {return "Opps...\nĐã xảy ra lỗi gì đó!\nChúng tôi sẽ sớm sửa lại.\nLiên hệ @quoctrieudev";}
+function opps() { return "Opps...\nĐã xảy ra lỗi gì đó!\nChúng tôi sẽ sớm sửa lại.\nLiên hệ @quoctrieudev"; }
 
 function error(type, detail) {
 
@@ -342,11 +341,12 @@ const sys_report = new CronJob('0 0,12 * * *', function () {
     bot.telegram.sendMessage(admin_id, "" + msg);
 }, null, true, 'Asia/Ho_Chi_Minh');
 const keep_awake = new CronJob('*/30 * * * *', () => {
-    if(process.env.ILLDING == "1"){
-        keep_awake.stop()
+    if (process.env.ILLDING != "1") {
+        axios.get(process.env.APP_BASE_URL + "/awake");
+        process.env.ILLDING = "1"
     }
     else {
-        axios.get(process.env.APP_BASE_URL + "/awake");
+        keep_awake.stop()
     }
 })
 
@@ -356,7 +356,7 @@ keep_awake.start();
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', async () =>{
+process.once('SIGTERM', async () => {
     bot.stop('SIGTERM')
     console.log("Idling...");
     await bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram');
@@ -375,10 +375,10 @@ app.get('/telegram', function (req, res) {
     bot.handleUpdate(req.body, res)
 })
 app.get('/telegram_dev', function (req, res) {
-    res.send("OK", 200)
+    res.status(200).send("OK");
 })
 app.get('/awake', function (req, res) {
-    res.send("OK", 200)
+    res.status(200).send("OK")
 })
 
 // Start server
