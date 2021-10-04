@@ -6,8 +6,10 @@ const fs = require('fs');
 const ytdl = require('ytdl-core');
 require('dotenv').config();
 
-// const bot = new Telegraf(process.env.BOT_DEV_TOKEN)
 
+axios.get(process.env.APP_BASE_URL + "/awake");
+
+// const bot = new Telegraf(process.env.BOT_DEV_TOKEN)
 // bot.launch()
 
 // process.once('SIGINT', async () => {
@@ -21,18 +23,18 @@ require('dotenv').config();
 //     bot.stop('SIGTERM')
 // })
 
-process.env.ILLDING = "1";
-const CronJob = require('cron').CronJob;
-const keep_awake = new CronJob('* * * * * *', () => {
-    if(process.env.ILLDING == "0"){
-        keep_awake.stop()
-        console.log("stop!")
-    }
-    else {
-        console.log("GET abcxyz");
-        process.env.ILLDING = "0";
-    }
-})
+// process.env.ILLDING = "1";
+// const CronJob = require('cron').CronJob;
+// const keep_awake = new CronJob('* * * * * *', () => {
+//     if(process.env.ILLDING == "0"){
+//         keep_awake.stop()
+//         console.log("stop!")
+//     }
+//     else {
+//         console.log("GET abcxyz");
+//         process.env.ILLDING = "0";
+//     }
+// })
 
 
-keep_awake.start()
+// keep_awake.start()

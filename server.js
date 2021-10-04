@@ -106,7 +106,6 @@ bot.use((ctx, next) => {
         tele_id = ctx.chat.id;
         process.env.ILLDING = "0";
     }
-    else bot.stop();
     next();
 })
 
