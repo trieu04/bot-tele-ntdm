@@ -6,18 +6,33 @@ const fs = require('fs');
 const ytdl = require('ytdl-core');
 require('dotenv').config();
 
-const bot = new Telegraf(process.env.BOT_DEV_TOKEN)
+// const bot = new Telegraf(process.env.BOT_DEV_TOKEN)
 
-bot.launch()
+// bot.launch()
 
-process.once('SIGINT', () => {
-    console.log(0); bot.stop('SIGTERM')
-    bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram_dev');
+// process.once('SIGINT', async () => {
+//     bot.stop('SIGTERM')
+//     console.log("illding");
+//     await bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram_dev');
+//     console.log("setWebhook")
+// })
+// process.once('SIGTERM', () => {
+//     console.log(1)
+//     bot.stop('SIGTERM')
+// })
 
+process.env.ILLDING = "1";
+const CronJob = require('cron').CronJob;
+const keep_awake = new CronJob('* * * * * *', () => {
+    if(process.env.ILLDING == "0"){
+        keep_awake.stop()
+        console.log("stop!")
+    }
+    else {
+        console.log("GET abcxyz");
+        process.env.ILLDING = "0";
+    }
 })
-process.once('SIGTERM', () => {
-    console.log(1)
-    bot.stop('SIGTERM')
-})
 
 
+keep_awake.start()
