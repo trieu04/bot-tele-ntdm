@@ -345,8 +345,9 @@ job.start();
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () =>{
     bot.stop('SIGTERM')
-    console.log("Idling...\nSet webhook to https://bot-tele-ntdm.herokuapp.com/telegram");
+    console.log("Idling...");
     bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram');
+    console.log("Set webhook to https://bot-tele-ntdm.herokuapp.com/telegram");
 })
 
 const express = require('express')
