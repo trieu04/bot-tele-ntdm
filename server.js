@@ -391,9 +391,9 @@ app.get('/awake', (req, res) => res.status(200).send("Waked"))
 const server = app.listen(process.env.PORT || 3000, () => console.log('Server is running...'))
 
 // graceful stop
-async function graceful_stop() {
+function graceful_stop() {
     console.log("Stopping...");
-    await bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram:ntdm');
+    bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram:ntdm');
     console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm");
     server.close();
     console.log("Close http server");
@@ -402,11 +402,11 @@ async function graceful_stop() {
     console.log("Stop cron jobs");
     process.exit();
 }
-process.once('SIGINT', async () => {
+process.once('SIGINT', () => {
     bot.stop('SIGINT')
-    await graceful_stop();
+    graceful_stop();
 })
-process.once('SIGTERM', async () => {
+process.once('SIGTERM', () => {
     bot.stop('SIGTERM')
-    await graceful_stop();
+    graceful_stop();
 })
