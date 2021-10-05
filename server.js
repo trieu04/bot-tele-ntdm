@@ -160,29 +160,7 @@ bot.help(ctx => {
         }
     })
 })
-bot.command("admin", ctx => {
-    if (tele_id != admin_id) return;
-    reply = system_check();
-    ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
-        reply_markup: {
-            keyboard: [
-                [
-                    { "text": "/admin" }
-                ],
-                [
-                    { "text": "/system" },
-                    { "text": "/uptime" }
-                ],
-                [
-                    { "text": "/givekey" },
-                    { "text": "/keywarp" }
-                ]
-            ],
-            "resize_keyboard": true,
-            "one_time_keyboard": true,
-        }
-    })
-})
+
 
 // SYSTEM
 bot.command("system", (ctx) => {
@@ -193,6 +171,14 @@ bot.command("uptime", ctx => {
     reply = "Process Uptime: " + secondsToDhms(process.uptime());
     ctx.reply(reply);
 })
+bot.command("process", ctx => {
+    var reply = ""
+        + "PID: " + process.pid + eol
+        + system_check() + eol;
+
+    ctx.reply(reply)
+})
+// 
 bot.command("keywarp", async ctx => {
     ctx.reply("Đang tìm kiếm")
     res = await ntdm_api.post("/key.php/warp/foruser", { "tele_id": tele_id }).catch((e) => {
@@ -244,7 +230,29 @@ bot.command("givekey", async ctx => {
 bot.command("video", ctx => {
     // ctx.scene.enter("video")
 })
-
+bot.command("admin", ctx => {
+    if (tele_id != admin_id) return;
+    reply = system_check();
+    ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
+        reply_markup: {
+            keyboard: [
+                [
+                    { "text": "/admin" }
+                ],
+                [
+                    { "text": "/system" },
+                    { "text": "/uptime" }
+                ],
+                [
+                    { "text": "/givekey" },
+                    { "text": "/keywarp" }
+                ]
+            ],
+            "resize_keyboard": true,
+            "one_time_keyboard": true,
+        }
+    })
+})
 bot.command("sendreport", ctx => {
     msg = ctx.message.text.replace(/^\/(\S+)(\s+)?/, "")
     if (msg) {
@@ -364,7 +372,13 @@ app.get('/', function (req, res) {
 app.post('/telegram:ntdm', function (req, res) {
     bot.handleUpdate(req.body, res)
 })
-app.all('/telegram_dev', function (req, res) {
+app.get('/telegram:ntdm', function (req, res) {
+    res.send("Ok")
+})
+app.get('/telegram_dev', function (req, res) {
+    res.status(200);
+})
+app.post('/telegram_dev', function (req, res) {
     res.status(200);
 })
 app.get('/awake', function (req, res) {
@@ -384,6 +398,7 @@ async function graceful_stop() {
     keep_awake.stop();
     sys_report.stop();
     console.log("Stop cron jobs");
+    process.exit();
 }
 process.once('SIGINT', async () => {
     bot.stop('SIGINT')
