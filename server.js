@@ -376,7 +376,7 @@ const keep_awake = new CronJob('*/30 * * * *', () => {
     }
 })
 sys_report.start();
-// keep_awake.start();
+keep_awake.start();
 
 // Start app for Heroku
 const app = express()
@@ -400,7 +400,7 @@ function graceful_stop() {
         .catch(() => console.log("Webhook set unsuccessfully"));
     server.close();
     console.log("Close http server");
-    // keep_awake.stop();
+    keep_awake.stop();
     sys_report.stop();
     console.log("Stop cron jobs");
     process.exit();
