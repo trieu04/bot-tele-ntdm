@@ -1,8 +1,8 @@
 {
-  "name": "botcheck",
-  "version": "1.0.0",
+  "name": "faye_bot",
+  "version": "1.0.1",
   "description": "",
-  "main": "test.js",
+  "main": "server.js",
   "scripts": {
     "test": "node test.js",
     "start": "node server.js"
