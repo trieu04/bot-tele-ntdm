@@ -136,33 +136,66 @@ bot.start(ctx => {
     })
 })
 bot.help(ctx => {
-    var reply = ""
-        + "Sau đây là các lệnh bạn có thể thực hiện với Faye Bot\n\n"
-        + "✅ /help Lấy danh sách các lệnh được hỗ trợ\n"
-        + "✅ /keywarp Nhận key warp+ miễn phí\n"
-
-    ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    {
-                        text: "🌐 Website: FayeDark.com",
-                        url: "https://www.fayedark.com"
-                    },
+    if (tele_id == admin_id) {
+        var reply = ""
+            + "Faye Bot" + eol
+            + "  /help" + eol
+            + "  /process" + eol
+            + "  /system" + eol
+            + "  /uptime" + eol + eol
+            + "  /givekey" + eol
+            + "  /keywarp" + eol + eol
+            + "  /detail" + eol
+            + ""
+        ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
+            reply_markup: {
+                keyboard: [
+                    [
+                        { "text": "/system" },
+                        { "text": "/uptime" }
+                    ],
+                    [
+                        { "text": "/givekey" },
+                        { "text": "/keywarp" }
+                    ]
                 ],
-                [
-                    {
-                        text: "Fanpage",
-                        url: "https://facebook.com/FayeRelax"
-                    },
-                    {
-                        text: "My Group",
-                        url: "https://facebook.com/groups/nknhh"
-                    }
+                resize_keyboard: true,
+                one_time_keyboard: true,
+            }
+        });
+    }
+    else {
+        var reply = ""
+            + "Sau đây là các lệnh bạn có thể thực hiện với Faye Bot\n\n"
+            + "✅ /help Lấy danh sách các lệnh được hỗ trợ\n"
+            + "✅ /keywarp Nhận key warp+ miễn phí\n"
+
+        ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        {
+                            text: "🌐 Website: FayeDark.com",
+                            url: "https://www.fayedark.com"
+                        },
+                    ],
+                    [
+                        {
+                            text: "Fanpage",
+                            url: "https://facebook.com/FayeRelax"
+                        },
+                        {
+                            text: "My Group",
+                            url: "https://facebook.com/groups/nknhh"
+                        }
+                    ]
                 ]
-            ]
-        }
-    })
+            }
+        });
+    }
+
+
+
 })
 
 
@@ -182,7 +215,31 @@ bot.command("process", ctx => {
 
     ctx.reply(reply)
 })
-// 
+
+// ADMIN ZONE
+
+bot.command("givekey", async ctx => {
+    if (tele_id != admin_id) return;
+    ctx.reply("Đang tìm kiếm")
+    res = await ntdm_api.get("/key.php/warp/foruser", { "params": { "manual": true } }).catch((e) => {
+        handingAxiosError(e, "POST: http://api.quoctrieudev.com/key.php/warp/foruser");
+        ctx.reply(":((\nĐã xảy ra lỗi - Không thể kết nối tới máy chủ.")
+    });
+    if (!res) return;
+    if (res.data.exist_key) {
+        ctx.reply(res.data);
+        ctx.reply(res.data.license);
+        if (!res.data.update) {
+            ctx.reply("Cannot update database!");
+        }
+    }
+    else {
+        ctx.reply("Hmmmm\n"
+            + "Hết key rồi :)\n")
+    }
+})
+
+
 bot.command("keywarp", async ctx => {
     ctx.reply("Đang tìm kiếm")
     res = await ntdm_api.post("/key.php/warp/foruser", { "tele_id": tele_id }).catch((e) => {
@@ -211,52 +268,11 @@ bot.command("keywarp", async ctx => {
             + "Hãy thử lại sau nha");
     }
 })
-bot.command("givekey", async ctx => {
-    if (tele_id != admin_id) return;
-    ctx.reply("Đang tìm kiếm")
-    res = await ntdm_api.get("/key.php/warp/foruser", { "params": { "manual": true } }).catch((e) => {
-        handingAxiosError(e, "POST: http://api.quoctrieudev.com/key.php/warp/foruser");
-        ctx.reply(":((\nĐã xảy ra lỗi - Không thể kết nối tới máy chủ.")
-    });
-    if (!res) return;
-    if (res.data.exist_key) {
-        ctx.reply(res.data);
-        ctx.reply(res.data.license);
-        if (!res.data.update) {
-            ctx.reply("Cannot update database!");
-        }
-    }
-    else {
-        ctx.reply("Hmmmm\n"
-            + "Hết key rồi :)\n")
-    }
-})
+
 bot.command("video", ctx => {
     // ctx.scene.enter("video")
 })
-bot.command("admin", ctx => {
-    if (tele_id != admin_id) return;
-    reply = system_check();
-    ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
-        reply_markup: {
-            keyboard: [
-                [
-                    { "text": "/admin" }
-                ],
-                [
-                    { "text": "/system" },
-                    { "text": "/uptime" }
-                ],
-                [
-                    { "text": "/givekey" },
-                    { "text": "/keywarp" }
-                ]
-            ],
-            "resize_keyboard": true,
-            "one_time_keyboard": true,
-        }
-    })
-})
+
 bot.command("sendreport", ctx => {
     msg = ctx.message.text.replace(/^\/(\S+)(\s+)?/, "")
     if (msg) {
@@ -279,6 +295,7 @@ bot.command("detail", (ctx) => {
 })
 
 bot.catch(e => { console.log("Catch:"); console.log(e); })
+bot.launch();
 
 // Bot Function
 function handingAxiosError(error, pre = "") {
@@ -358,32 +375,17 @@ const keep_awake = new CronJob('*/30 * * * *', () => {
         keep_awake.stop()
     }
 })
-
-bot.launch();
 sys_report.start();
 keep_awake.start();
 
 // Start app for Heroku
 const app = express()
 app.use(express.static('public'))
-app.get('/', function (req, res) {
-    res.send("QuocTrieuIT")
-})
-app.post('/telegram:ntdm', function (req, res) {
-    bot.handleUpdate(req.body, res)
-})
-app.get('/telegram:ntdm', function (req, res) {
-    res.send("Ok")
-})
-app.get('/telegram_dev', function (req, res) {
-    res.status(200);
-})
-app.post('/telegram_dev', function (req, res) {
-    res.status(200);
-})
-app.get('/awake', function (req, res) {
-    res.status(200).send("OK")
-})
+app.get('/', (req, res) => { res.send("QuocTrieuIT") })
+app.post('/telegram:ntdm', (req, res) => bot.handleUpdate(req.body, res))
+app.get('/telegram:ntdm', (req, res) => res.send("Ok"))
+app.all("ping", (req, res) => res.status(200).send("OK"))
+app.get('/awake', (req, res) => res.status(200).send("Waked"))
 
 // Start http server
 app.listen(process.env.PORT || 3000, () => console.log('Server is running...'))
