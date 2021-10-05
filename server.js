@@ -1,10 +1,14 @@
 const { Context, Telegraf, session, Scenes: { WizardScene, BaseScene, Stage }, Markup } = require('telegraf')
-const axios = require('axios').default;
+const express = require('express')
 const process = require('process');
+const CronJob = require('cron').CronJob;
+
+require('dotenv').config();
 const os = require("os");
+
+const axios = require('axios').default;
 const fs = require('fs');
 const ytdl = require('ytdl-core');
-require('dotenv').config();
 
 const ntdm_api = axios.create({
     baseURL: 'http://api.quoctrieudev.com/',
@@ -338,8 +342,6 @@ function error(type, detail) {
 }
 
 // Cron job
-const CronJob = require('cron').CronJob;
-
 const sys_report = new CronJob('0 0,12 * * *', function () {
     var date = new Date();
     var msg = date.toLocaleDateString("vi-VN") + " " + date.toLocaleTimeString("vi-VN") + eol + eol
@@ -360,8 +362,6 @@ const keep_awake = new CronJob('*/30 * * * *', () => {
 bot.launch();
 sys_report.start();
 keep_awake.start();
-
-const express = require('express')
 
 // Start app for Heroku
 const app = express()
@@ -385,8 +385,8 @@ app.get('/awake', function (req, res) {
     res.status(200).send("OK")
 })
 
-// Start server
-const server = app.listen(process.env.PORT || 3000, () => console.log('Server is running...'))
+// Start http server
+app.listen(process.env.PORT || 3000, () => console.log('Server is running...'))
 
 // graceful stop
 async function graceful_stop() {
