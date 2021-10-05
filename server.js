@@ -393,6 +393,7 @@ const server = app.listen(process.env.PORT || 3000, () => console.log('Server is
 // graceful stop
 function graceful_stop() {
     console.log("Stopping...");
+
     axios.get(`https://api.telegram.org/bot${token}/setWebhook`, { params: { url: "https://bot-tele-ntdm.herokuapp.com/telegram:ntdm" }})
         .then(() => {
             console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm");
@@ -403,7 +404,6 @@ function graceful_stop() {
     keep_awake.stop();
     sys_report.stop();
     console.log("Stop cron jobs");
-    process.exit();
 }
 process.once('SIGINT', () => {
     bot.stop('SIGINT')
