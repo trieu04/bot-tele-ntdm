@@ -104,7 +104,7 @@ bot.use(stage.middleware())
 bot.use((ctx, next) => {
     if (ctx.chat && ctx.chat.hasOwnProperty("id")) {
         tele_id = ctx.chat.id;
-        process.env.ILLDING = "0";
+        process.env.IDLING = "0";
     }
     next();
 })
@@ -340,9 +340,9 @@ const sys_report = new CronJob('0 0,12 * * *', function () {
     bot.telegram.sendMessage(admin_id, "" + msg);
 }, null, true, 'Asia/Ho_Chi_Minh');
 const keep_awake = new CronJob('*/30 * * * *', () => {
-    if (process.env.ILLDING != "1") {
+    if (process.env.IDLING != "1") {
         axios.get(process.env.APP_BASE_URL + "/awake");
-        process.env.ILLDING = "1"
+        process.env.IDLING = "1"
     }
     else {
         keep_awake.stop()
@@ -353,15 +353,6 @@ bot.launch();
 sys_report.start();
 keep_awake.start();
 
-// Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', async () => {
-    bot.stop('SIGTERM')
-    console.log("Idling...");
-    await bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram');
-    console.log("Set webhook to https://bot-tele-ntdm.herokuapp.com/telegram");
-})
-
 const express = require('express')
 
 // Start app for Heroku
@@ -370,15 +361,35 @@ app.use(express.static('public'))
 app.get('/', function (req, res) {
     res.send("QuocTrieuIT")
 })
-app.get('/telegram', function (req, res) {
+app.post('/telegram:ntdm', function (req, res) {
     bot.handleUpdate(req.body, res)
 })
-app.get('/telegram_dev', function (req, res) {
-    res.status(200).send("OK");
+app.all('/telegram_dev', function (req, res) {
+    res.status(200);
 })
 app.get('/awake', function (req, res) {
     res.status(200).send("OK")
 })
 
 // Start server
-app.listen(process.env.PORT || 3000, () => console.log('Server is running...'))
+const server = app.listen(process.env.PORT || 3000, () => console.log('Server is running...'))
+
+// graceful stop
+async function graceful_stop() {
+    console.log("Stopping...");
+    await bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram:ntdm');
+    console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm");
+    server.close();
+    console.log("Close http server");
+    keep_awake.stop();
+    sys_report.stop();
+    console.log("Stop cron jobs");
+}
+process.once('SIGINT', async () => {
+    bot.stop('SIGINT')
+    await graceful_stop();
+})
+process.once('SIGTERM', async () => {
+    bot.stop('SIGTERM')
+    await graceful_stop();
+})
