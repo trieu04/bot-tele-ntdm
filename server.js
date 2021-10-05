@@ -388,7 +388,7 @@ app.all("ping", (req, res) => res.status(200).send("OK"))
 app.get('/awake', (req, res) => res.status(200).send("Waked"))
 
 // Start http server
-app.listen(process.env.PORT || 3000, () => console.log('Server is running...'))
+const server = app.listen(process.env.PORT || 3000, () => console.log('Server is running...'))
 
 // graceful stop
 async function graceful_stop() {
