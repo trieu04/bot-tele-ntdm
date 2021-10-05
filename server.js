@@ -137,7 +137,7 @@ bot.start(ctx => {
 })
 bot.help(ctx => {
     if (tele_id == admin_id) {
-        
+
         var reply = ""
             + "Faye Bot" + eol
             + "/help" + eol
@@ -213,7 +213,7 @@ bot.command("process", ctx => {
 })
 // ADMIN ZONE
 bot.command("stop", ctx => {
-    if(tele_id != admin_id) return;
+    if (tele_id != admin_id) return;
     ctx.reply("Process Stop")
     console.log("Send SIGTERM");
     process.kill(process.pid, "SIGTERM");
@@ -376,7 +376,7 @@ const keep_awake = new CronJob('*/30 * * * *', () => {
     }
 })
 sys_report.start();
-keep_awake.start();
+// keep_awake.start();
 
 // Start app for Heroku
 const app = express()
@@ -393,11 +393,14 @@ const server = app.listen(process.env.PORT || 3000, () => console.log('Server is
 // graceful stop
 function graceful_stop() {
     console.log("Stopping...");
-    bot.telegram.setWebhook('https://bot-tele-ntdm.herokuapp.com/telegram:ntdm');
-    console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm");
+    axios.get(`https://api.telegram.org/bot${token}/setWebhook`, { params: { url: "https://bot-tele-ntdm.herokuapp.com/telegram:ntdm" }})
+        .then(() => {
+            console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm");
+        })
+        .catch(() => console.log("Webhook set unsuccessfully"));
     server.close();
     console.log("Close http server");
-    keep_awake.stop();
+    // keep_awake.stop();
     sys_report.stop();
     console.log("Stop cron jobs");
     process.exit();
