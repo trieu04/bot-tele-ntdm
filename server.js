@@ -137,16 +137,16 @@ bot.start(ctx => {
 })
 bot.help(ctx => {
     if (tele_id == admin_id) {
+        
         var reply = ""
             + "Faye Bot" + eol
-            + "  /help" + eol
-            + "  /process" + eol
-            + "  /system" + eol
-            + "  /uptime" + eol + eol
-            + "  /givekey" + eol
-            + "  /keywarp" + eol + eol
-            + "  /detail" + eol
-            + ""
+            + "/help" + eol
+            + "/process" + eol
+            + "/system" + eol
+            + "/uptime" + eol + eol
+            + "/givekey" + eol
+            + "/keywarp" + eol + eol
+            + "/detail" + eol
         ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
             reply_markup: {
                 keyboard: [
@@ -197,9 +197,6 @@ bot.help(ctx => {
 
 
 })
-
-
-// SYSTEM
 bot.command("system", (ctx) => {
     reply = system_check();
     ctx.reply(reply)
@@ -212,12 +209,15 @@ bot.command("process", ctx => {
     var reply = ""
         + "PID: " + process.pid + eol
         + system_check() + eol;
-
     ctx.reply(reply)
 })
-
 // ADMIN ZONE
-
+bot.command("stop", ctx => {
+    if(tele_id != admin_id) return;
+    ctx.reply("Process Stop")
+    console.log("Send SIGTERM");
+    process.kill(process.pid, "SIGTERM");
+})
 bot.command("givekey", async ctx => {
     if (tele_id != admin_id) return;
     ctx.reply("Đang tìm kiếm")
