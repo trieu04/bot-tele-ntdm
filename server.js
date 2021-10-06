@@ -364,7 +364,7 @@ const sys_report = new CronJob('0 0,12 * * *', function () {
     date_opts = {
         timeZone: "Asia/Ho_Chi_Minh"
     }
-    var msg = date.toLocaleDateString("vi-VN", date_opts) + " " + date.toLocaleTimeString("vi-VN", date_opts) + " GMT +7:00" + eol + eol
+    var msg = date.toLocaleDateString("vi-VN", date_opts) + " " + date.toLocaleTimeString("vi-VN", date_opts) + " UTC +7:00" + eol + eol
         + system_check();
     bot.telegram.sendMessage(admin_id, "" + msg);
 }, null, true, 'Asia/Ho_Chi_Minh');
