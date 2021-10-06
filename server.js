@@ -1,5 +1,5 @@
 const { Context, Telegraf, session, Scenes: { WizardScene, BaseScene, Stage }, Markup } = require('telegraf')
-const express = require('express')
+
 const process = require('process');
 const CronJob = require('cron').CronJob;
 
@@ -381,6 +381,7 @@ sys_report.start();
 keep_awake.start();
 
 // Start app for heroku
+const express = require('express')
 const body_parser = require("body-parser");
 const app = express()
 app.use(express.static('public'))
@@ -390,6 +391,7 @@ app.get('/', (req, res) => { res.send("QuocTrieuIT") })
 app.post('/telegram:ntdm', (req, res) => bot.handleUpdate(req.body, res))
 app.get('/telegram:ntdm', (req, res) => res.send("Ok"))
 app.all("ping", (req, res) => res.status(200).send("OK"))
+app.all("request", (req, res) => res.status(200))
 app.get('/awake', (req, res) => res.status(200).send("Waked"))
 
 // Start http server
@@ -398,8 +400,9 @@ const server = app.listen(process.env.PORT || 3000, () => console.log('Server is
 // graceful stop
 function graceful_stop() {
     console.log("Stopping...");
-    bot.telegram.setWebhook("https://bot-tele-ntdm.herokuapp.com/telegram:ntdm", () => console.log("Webhook set"));
-    console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm");
+    bot.telegram.setWebhook("https://bot-tele-ntdm.herokuapp.com/telegram:ntdm")
+        .then(() => console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm"))
+        .catch(() => console.log("Webhook set unsuccess"));
     server.close();
     console.log("Close http server");
     keep_awake.stop();
