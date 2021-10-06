@@ -22,7 +22,7 @@ const token = process.env.BOT_TOKEN
 const report_id = process.env.REPORT_ID
 const admin_id = process.env.ADMIN_ID
 var tele_id;
-
+var update_id;
 // Scense
 const videoScene = new BaseScene("video");
 videoScene.enter(ctx => {
@@ -108,8 +108,10 @@ bot.use(stage.middleware())
 bot.use((ctx, next) => {
     if (ctx.chat && ctx.chat.hasOwnProperty("id")) {
         tele_id = ctx.chat.id;
-        process.env.IDLING = "0";
+        update_id = ctx.
+            process.env.IDLING = "0";
     }
+    update_id = ctx.update && ctx.update.update_id ? ctx.update.update_id : 0;
     next();
 })
 
@@ -171,26 +173,24 @@ bot.help(ctx => {
             + "✅ /keywarp Nhận key warp+ miễn phí\n"
 
         ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
-            reply_markup: {
-                inline_keyboard: [
-                    [
-                        {
-                            text: "🌐 Website: FayeDark.com",
-                            url: "https://www.fayedark.com"
-                        },
-                    ],
-                    [
-                        {
-                            text: "Fanpage",
-                            url: "https://facebook.com/FayeRelax"
-                        },
-                        {
-                            text: "My Group",
-                            url: "https://facebook.com/groups/nknhh"
-                        }
-                    ]
+            reply_markup: { inline_keyboard: [
+                [
+                    {
+                        text: "🌐 Website: FayeDark.com",
+                        url: "https://www.fayedark.com"
+                    },
+                ],
+                [
+                    {
+                        text: "Fanpage",
+                        url: "https://facebook.com/FayeRelax"
+                    },
+                    {
+                        text: "My Group",
+                        url: "https://facebook.com/groups/nknhh"
+                    }
                 ]
-            }
+            ]}
         });
     }
 
@@ -294,7 +294,7 @@ bot.command("detail", (ctx) => {
     ctx.reply(ctx.chat);
 })
 
-bot.catch(e => { console.log("Catch:"); console.log(e); })
+bot.catch(e => { console.log("Catch: "); console.log(e.message); })
 bot.launch();
 
 // Bot Function
@@ -388,7 +388,16 @@ app.use(express.static('public'))
 app.use(body_parser.urlencoded({ extended: false }));
 app.use(body_parser.json());
 app.get('/', (req, res) => { res.send("QuocTrieuIT") })
-app.post('/telegram:ntdm', (req, res) => bot.handleUpdate(req.body, res))
+app.post('/telegram:ntdm', (req, res) => {
+    if (req.body.update_id > update_id) {
+        bot.handleUpdate(req.body, res)
+            .then()
+            .catch(() => res.status(500).send())
+    }
+    else {
+        res.status(200).send()
+    }
+})
 app.get('/telegram:ntdm', (req, res) => res.send("Ok"))
 app.all("/ping", (req, res) => res.status(200).send("OK"))
 app.all("/request", (req, res) => res.status(200).send())
@@ -402,7 +411,7 @@ function graceful_stop() {
     console.log("Stopping...");
     bot.telegram.setWebhook("https://bot-tele-ntdm.herokuapp.com/telegram:ntdm")
         .then(() => console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm"))
-        .catch(() => console.log("Webhook set unsuccess"));
+        .catch(() => console.error("Unsuccess Webhook set"));
     server.close();
     console.log("Close http server");
     keep_awake.stop();
