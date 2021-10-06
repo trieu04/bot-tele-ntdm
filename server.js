@@ -391,7 +391,7 @@ app.get('/', (req, res) => { res.send("QuocTrieuIT") })
 app.post('/telegram:ntdm', (req, res) => bot.handleUpdate(req.body, res))
 app.get('/telegram:ntdm', (req, res) => res.send("Ok"))
 app.all("ping", (req, res) => res.status(200).send("OK"))
-app.all("request", (req, res) => res.status(200))
+app.all("request", (req, res) => res.status(200).send())
 app.get('/awake', (req, res) => res.status(200).send("Waked"))
 
 // Start http server
