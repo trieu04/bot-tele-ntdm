@@ -108,8 +108,7 @@ bot.use(stage.middleware())
 bot.use((ctx, next) => {
     if (ctx.chat && ctx.chat.hasOwnProperty("id")) {
         tele_id = ctx.chat.id;
-        update_id = ctx.
-            process.env.IDLING = "0";
+        process.env.IDLING = "0";
     }
     update_id = ctx.update && ctx.update.update_id ? ctx.update.update_id : 0;
     next();
@@ -294,7 +293,7 @@ bot.command("detail", (ctx) => {
     ctx.reply(ctx.chat);
 })
 
-bot.catch(e => { console.log("Catch: "); console.log(e.message); })
+bot.catch(e => { console.error("Bot Catch: ", e.toString(), e.stack.split("\n").slice(0, 4).join("\n")); })
 bot.launch();
 
 // Bot Function
