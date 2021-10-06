@@ -361,9 +361,11 @@ function error(type, detail) {
 // Cron job
 const sys_report = new CronJob('0 0,12 * * *', function () {
     var date = new Date();
-    var msg = date.toLocaleDateString("vi-VN") + " " + date.toLocaleTimeString("vi-VN") + eol + eol
+    date_opts = {
+        timeZone: "Asia/Ho_Chi_Minh"
+    }
+    var msg = date.toLocaleDateString("vi-VN", date_opts) + " " + date.toLocaleTimeString("vi-VN", date_opts) + " GMT +7:00" + eol + eol
         + system_check();
-    console.log(msg);
     bot.telegram.sendMessage(admin_id, "" + msg);
 }, null, true, 'Asia/Ho_Chi_Minh');
 const keep_awake = new CronJob('*/30 * * * *', () => {
@@ -378,9 +380,12 @@ const keep_awake = new CronJob('*/30 * * * *', () => {
 sys_report.start();
 keep_awake.start();
 
-// Start app for Heroku
+// Start app for heroku
+const body_parser = require("body-parser");
 const app = express()
 app.use(express.static('public'))
+app.use(body_parser.urlencoded({ extended: false }));
+app.use(body_parser.json());
 app.get('/', (req, res) => { res.send("QuocTrieuIT") })
 app.post('/telegram:ntdm', (req, res) => bot.handleUpdate(req.body, res))
 app.get('/telegram:ntdm', (req, res) => res.send("Ok"))
@@ -393,12 +398,8 @@ const server = app.listen(process.env.PORT || 3000, () => console.log('Server is
 // graceful stop
 function graceful_stop() {
     console.log("Stopping...");
-
-    axios.get(`https://api.telegram.org/bot${token}/setWebhook`, { params: { url: "https://bot-tele-ntdm.herokuapp.com/telegram:ntdm" }})
-        .then(() => {
-            console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm");
-        })
-        .catch(() => console.log("Webhook set unsuccessfully"));
+    bot.telegram.setWebhook("https://bot-tele-ntdm.herokuapp.com/telegram:ntdm", () => console.log("Webhook set"));
+    console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm");
     server.close();
     console.log("Close http server");
     keep_awake.stop();
