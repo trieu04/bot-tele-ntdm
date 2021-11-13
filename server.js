@@ -1,14 +1,22 @@
 const { Context, Telegraf, session, Scenes: { WizardScene, BaseScene, Stage }, Markup } = require('telegraf')
 
 const process = require('process');
+const fs = require('fs');
+const os = require("os");
+const events = require('events');
+require('dotenv').config();
+const pidusage = require('pidusage');
+const moment = require('moment')
 const CronJob = require('cron').CronJob;
 
-require('dotenv').config();
-const os = require("os");
-
 const axios = require('axios').default;
-const fs = require('fs');
+const mysql = require('mysql')
+
+const progress = require('progress-stream');
+const search = require('youtube-search');
 const ytdl = require('ytdl-core');
+
+const DEV_MODE = process.env.MODE == "dev" ? true : false;
 
 const ntdm_api = axios.create({
     baseURL: 'http://api.quoctrieudev.com/',
@@ -16,15 +24,115 @@ const ntdm_api = axios.create({
     data: { access_key: "1111" },
     headers: { 'Content-Type': 'application/json;charset=UTF-8', "Access-Control-Allow-Origin": "*" }
 });
+const opps = () => { return "Opps...\nĐã xảy ra lỗi gì đó!\nChúng tôi sẽ sớm sửa lại.\nLiên hệ @quoctrieudev"; }
 const eol = os.EOL;
 // Telegram
-const token = process.env.BOT_TOKEN
-const report_id = process.env.REPORT_ID
-const admin_id = process.env.ADMIN_ID
+const token = DEV_MODE ? process.env.BOT_DEV_TOKEN : process.env.BOT_TOKEN
+const tg_report_id = process.env.TG_GROUP_REPORT
+const tg_admin_id = process.env.TG_ADMIN
+const tg_filestore_id = process.env.TG_GROUP_FILE
+
 var tele_id;
 var update_id;
+
+const bot = new Telegraf(token)
+
+// // MySQL Database
+// const mysqlc = mysql.createConnection({
+//     host: 'free01.123host.vn',
+//     user: 'quoctrie',
+//     password: '0fCoDEABM1wz3uE',
+//     database: 'quoctrie_faye'
+// })
+// mysqlc.connect();
+
+const yt_media = class {
+    constructor(video_id) {
+
+        this.id = video_id
+        this.status = new events.EventEmitter()
+        this.output;
+        this.root_tmp = "./tmp/yt-media"
+
+        if (!fs.existsSync(this.root_tmp)) fs.mkdirSync(this.root_tmp)
+    }
+
+    async getInfo() {
+        this.info = await ytdl.getInfo(this.id).catch((err) => console.log("ytdl: Error: ", err.message))
+        if (typeof this.info === "undefined") return false;
+        return this.info;
+    }
+
+    get(option) {
+        switch (option.type) {
+            case "standard":
+                var format = ytdl.chooseFormat(this.info.formats, { quality: "highest" })
+                this.file = ytdl.downloadFromInfo(this.info, { quality: format.itag, dlChunkSize: 0 })
+                var str = progress({
+                    time: 1000,
+                    length: format.contentLength
+                }, (progress) => { this.status.emit("progress", progress) })
+
+                var output = this.dir_make({ extention: format.container })
+                this.output = output;
+
+                fs.writeFileSync(this.dir_make({ suffix: "std", extention: "json" }), JSON.stringify(format, null, 4))
+                this.file.pipe(str).pipe(fs.createWriteStream(output))
+                this.file.on("end", () => { this.status.emit("done") })
+                break;
+            case "audio":
+                var format = ytdl.chooseFormat(this.info.formats, { quality: "highestaudio" })
+                this.file = ytdl.downloadFromInfo(this.info, { quality: format.itag, dlChunkSize: 0 })
+                var str = progress({
+                    time: 1000,
+                    length: format.contentLength
+                }, (progress) => { this.status.emit("progress", progress) })
+
+                this.output = this.dir_make({ suffix: "audio", extention: format.container })
+
+                fs.writeFileSync(this.dir_make({ extention: "json" }), JSON.stringify(format, null, 4))
+                this.file.pipe(str).pipe(fs.createWriteStream(this.output))
+                this.file.on("end", () => {
+                    this.status.emit("done")
+                })
+                break;
+            case undefined:
+                throw new Error("yt_media: Error: option.type must be set")
+        }
+    }
+    dir_make(option) {
+        var opt = Object.assign({
+            id: this.id,
+            name: "main",
+            prefix: undefined,
+            suffix: undefined,
+            div: "~",
+            extention: undefined,
+        }, option)
+
+        var id_dir = this.root_tmp + "/" + opt.id;
+        if (!fs.existsSync(this.root_tmp)) fs.mkdirSync(this.root_tmp)
+        if (!fs.existsSync(id_dir)) fs.mkdirSync(id_dir)
+        var file_name = ""
+            + (opt.prefix ? opt.prefix + opt.div : "")
+            + opt.name
+            + (opt.suffix ? opt.div + opt.suffix : "")
+            + (opt.extention ? "." + opt.extention : "")
+        return id_dir + "/" + file_name;
+    }
+}
+// File
+if (!fs.existsSync('./tmp')) fs.mkdirSync("./tmp")
+
+
+
 // Scense
 const videoScene = new BaseScene("video");
+var video_markup_btn = {};
+video_markup_btn.nav = [
+    { text: "🔎Tìm lại", callback_data: "video:search.researh" },
+    { text: "❌Hủy bỏ", callback_data: "video:search.cancel" }
+]
 videoScene.enter(ctx => {
     ctx.reply("Nhập tên video")
 })
@@ -32,76 +140,106 @@ videoScene.command("cancel", ctx => ctx.scene.leave())
 videoScene.on("text", async ctx => {
     var message = await ctx.reply(`Đang tìm ${ctx.message.text}`)
 
-    console.log(message)
+    var search_string = ctx.message.text;
     ctx.session.video = {}
-    ctx.session.video.search = ctx.message.text
     ctx.session.video.message = message
     ctx.session.video.mess_id = [message.chat.id, message.message_id]
-    var search = require('youtube-search');
 
     var opts = {
         maxResults: 5,
         key: process.env.GOOGLE_API_KEY,
         type: "video"
     };
-
-    var ytsearch = await search(ctx.session.video.search, opts).catch((err) => { error("axios_error", { host: "api.google.com" }) });
-    if (!search) {
+    var ytsearch = await search(search_string, opts).catch(() => { error("axios_error", { host: "api.google.com" }) });
+    if (!ytsearch) {
         ctx.reply(":((\nKhông thể kết nối tới Youtube lúc này. Hãy đợi một chút và thử lại!");
-        return;
+        ctx.scene.leave();
+        return
     }
     var ytsr = ytsearch.results;
     ctx.session.video.results = ytsr;
-    reply = "Kết quả cho: " + ctx.session.video.search + eol;
-    btn = [];
+    reply = "Kết quả cho: " + search_string + eol;
+    btn = [[], []];
     for (i in ytsr) {
-        reply += `\n${i - - 1}. ${ytsr[i].title}`;
-        btn.push({ text: `${i - - 1}`, callback_data: `video:select=${i}` })
+        reply += `\n${1 + Number(i)}. ${ytsr[i].title}`;
+        btn[0].push({ text: `${1 + Number(i)}`, callback_data: `video:search.selectID=${ytsr[i].id}` })
     }
-
+    btn[1] = [
+        { text: "🔙 Trở về", callback_data: "video:search.return" },
+        { text: "🔎 Tìm lại", callback_data: "video:search.researh" },
+        { text: "❌ Hủy bỏ", callback_data: "video:search.cancel" },
+    ]
     ctx.telegram.editMessageText(message.chat.id, message.message_id, null, reply)
     ctx.telegram.editMessageReplyMarkup(message.chat.id, message.message_id, null, JSON.stringify({
-        inline_keyboard: [
-            btn
-        ]
+        inline_keyboard: btn
     })
     )
 
 })
 videoScene.action(/^video:/, async ctx => {
-    nav = String(ctx.match.input);
-    if (/^video:select=\d+/.test(nav)) {
-        select = nav.split("=", 2)[1];
-        ctx.answerCbQuery();
-        ctx.telegram.editMessageText(ctx.session.video.mess_id[0], ctx.session.video.mess_id[1], null, `Đang tải video ${ctx.session.video.results[select].title}`)
-        ctx.telegram.editMessageReplyMarkup(ctx.session.video.mess_id[0], ctx.session.video.mess_id[1], null, JSON.stringify({
+    var nav = String(ctx.match.input);
+    console.log(nav);
+    if (/^video:search\.selectID=\w+/.test(nav)) {
+        const yt_id = nav.split("=", 2)[1];
+        var message = ctx.session.video.message;
+        ctx.telegram.editMessageText(message.chat.id, message.message_id, null, `Đang tải video...`)
+        ctx.telegram.editMessageReplyMarkup(message.chat.id, message.message_id, null, JSON.stringify({
             inline_keyboard: [
-
+                [
+                    { text: "❌Hủy bỏ", callback_data: "video:download.cancel" }
+                ]
             ]
         }));
-        var yt_id = ctx.session.video.results[select].id
-        // const video = ytdl(yt_id);
-        // var output = "./cache/video/" + yt_id + ".mp4";
-        // video.pipe(fs.createWriteStream(output));
-        // video.on('end', () => {
-        //     fs.unlinkSync(output)
-        //     
-        // });
-        let info = await ytdl.getInfo(yt_id);
-        xx = ytdl.chooseFormat(info.formats, { quality: "highest" })
-        console.log(xx.url)
-        ctx.replyWithVideo(xx.url)
+
+        var f = new yt_media(yt_id)
+        if (! await f.getInfo()) { ctx.reply("Đã xảy ra lỗi"); return; }
+        f.status.on("progress", (progress) => {
+            var msg = ""
+                + f.info.videoDetails.title + eol + eol
+                + JSON.stringify(progress, null, 4)
+            ctx.telegram.editMessageText(message.chat.id, message.message_id, null, msg).catch(e => console.log(e.message))
+        });
+        f.status.on("done", () => {
+
+            ctx.telegram.editMessageText(message.chat.id, message.message_id, null, "Done, Upload to telegram!")
+
+            var stat = fs.statSync(f.output);
+            var s = progress({
+                length: stat.size,
+                time: 1000 /* ms */
+            }, function (progress) {
+                var msg = ""
+                    + "Upload" + eol + eol
+                    + JSON.stringify(progress, null, 4)
+                ctx.telegram.editMessageText(message.chat.id, message.message_id, null, msg).catch(e => console.log(e.message))
+            });
+
+            var upload_file = fs.createReadStream(f.output)
+
+            bot.telegram.sendVideo(tg_filestore_id, { source: upload_file, filename: f.output })
+
+        });
+        f.get({ type: "standard" })
 
     }
+
+    if (/^video:search\.return/.test(nav)) {
+
+    }
+    ctx.answerCbQuery();
 
 })
 videoScene.leave(ctx => {
     delete ctx.session.video;
 })
+
+function tg_upload(option) {
+
+}
+
+
 const stage = new Stage([videoScene])
 stage.command("cancel", ctx => ctx.scene.leave())
-
-const bot = new Telegraf(token)
 
 bot.use(session())
 bot.use(stage.middleware())
@@ -137,7 +275,7 @@ bot.start(ctx => {
     })
 })
 bot.help(ctx => {
-    if (tele_id == admin_id) {
+    if (tele_id == tg_admin_id) {
 
         var reply = ""
             + "Faye Bot" + eol
@@ -172,24 +310,30 @@ bot.help(ctx => {
             + "✅ /keywarp Nhận key warp+ miễn phí\n"
 
         ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
-            reply_markup: { inline_keyboard: [
-                [
-                    {
-                        text: "🌐 Website: FayeDark.com",
-                        url: "https://www.fayedark.com"
-                    },
-                ],
-                [
-                    {
-                        text: "Fanpage",
-                        url: "https://facebook.com/FayeRelax"
-                    },
-                    {
-                        text: "My Group",
-                        url: "https://facebook.com/groups/nknhh"
-                    }
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        {
+                            text: "🌐 Website: FayeDark.com",
+                            url: "https://www.fayedark.com"
+                        },
+                        {
+                            text: "Fanpage",
+                            url: "https://facebook.com/FayeRelax"
+                        },
+                        {
+                            text: "My Group",
+                            url: "https://facebook.com/groups/nknhh"
+                        }
+                    ],
+                    [
+                        {
+                            text: "Ủng hộ chúng tôi!",
+                            url: "https://www.fayedark.com/p/ung-ho-chung-toi.html"
+                        }
+                    ]
                 ]
-            ]}
+            }
         });
     }
 
@@ -204,25 +348,25 @@ bot.command("uptime", ctx => {
     reply = "Process Uptime: " + secondsToDhms(process.uptime());
     ctx.reply(reply);
 })
-bot.command("process", ctx => {
-    var reply = ""
-        + "PID: " + process.pid + eol
-        + system_check() + eol;
+bot.command("process", async ctx => {
+    var reply = await process_check();
     ctx.reply(reply)
 })
 // ADMIN ZONE
 bot.command("stop", ctx => {
-    if (tele_id != admin_id) return;
+    if (tele_id != tg_admin_id) return;
     ctx.reply("Process Stop")
     console.log("Send SIGTERM");
     process.kill(process.pid, "SIGTERM");
-})
+});
+
 bot.command("givekey", async ctx => {
-    if (tele_id != admin_id) return;
+    if (tele_id != tg_admin_id) return;
     ctx.reply("Đang tìm kiếm")
-    res = await ntdm_api.get("/key.php/warp/foruser", { "params": { "manual": true } }).catch((e) => {
-        handingAxiosError(e, "POST: http://api.quoctrieudev.com/key.php/warp/foruser");
-        ctx.reply(":((\nĐã xảy ra lỗi - Không thể kết nối tới máy chủ.")
+    const res = await ntdm_api.get("/key.php/warp/foruser", { "params": { "manual": true } }).catch((e) => {
+        var err = handingAxiosError(e, "POST: http://api.quoctrieudev.com/key.php/warp/foruser");
+        ctx.reply(":((\nĐã xảy ra lỗi - Với máy chủ.");
+        send_report(err, { chat: ctx.message });
     });
     if (!res) return;
     if (res.data.exist_key) {
@@ -236,14 +380,15 @@ bot.command("givekey", async ctx => {
         ctx.reply("Hmmmm\n"
             + "Hết key rồi :)\n")
     }
-})
+});
 
 
 bot.command("keywarp", async ctx => {
     ctx.reply("Đang tìm kiếm")
-    res = await ntdm_api.post("/key.php/warp/foruser", { "tele_id": tele_id }).catch((e) => {
-        handingAxiosError(e, "POST: http://api.quoctrieudev.com/key.php/warp/foruser");
-        ctx.reply(":((\nĐã xảy ra lỗi - Không thể kết nối tới máy chủ.\nVui lòng thử lại sau!")
+    const res = await ntdm_api.post("/key.php/warp/foruser", { "tele_id": tele_id }).catch((e) => {
+        var err = handingAxiosError(e, "POST: http://api.quoctrieudev.com/key.php/warp/foruser");
+        ctx.reply(":((\nĐã xảy ra lỗi - Đã có lỗi khi kết nối tới máy chủ.\nVui lòng thử lại sau!");
+        send_report(err, { chat: ctx.message });
     });
     if (!res) return;
     if (res.data.exist_key) {
@@ -253,12 +398,12 @@ bot.command("keywarp", async ctx => {
                 + "Vì số lượng key có hạn nên mỗi người chỉ được nhận một key thôi nha\n"
                 + "Dưới đây là key đã gửi:"
             )
-            ctx.reply(res.data.license)
+            ctx.reply(res.data.license);
         }
         else {
             ctx.reply("Key của bạn đây");
             ctx.reply(res.data.license);
-            ctx.reply("Thi thoảng hãy ủng hộ web FayeDark.com bằng 1 click quảng cáo để tụi mình duy trì kinh phí hoạt động nha :33");
+            // ctx.reply("Thi thoảng hãy ủng hộ web FayeDark.com bằng 1 click quảng cáo để tụi mình duy trì kinh phí hoạt động nha :33");
         }
     }
     else {
@@ -268,17 +413,33 @@ bot.command("keywarp", async ctx => {
     }
 })
 
-bot.command("video", ctx => {
-    // ctx.scene.enter("video")
+bot.command("video", async ctx => {
+    return;
+    var main = ctx.message.text.replace(/^\/(\S+)(\s+)?/, "").trim()
+    if (main.length == 11) {
+        var info = await ytdl.getInfo(main);
+        if (typeof info === "undefined") { ctx.reply("Đã xảy ra lỗi!"); return; }
+        var format = ytdl.chooseFormat(info.formats, { quality: "highest" })
+        ctx.reply(format.url)
+        // const video = ytdl.downloadFromInfo(info, {quality: format.itag})
+        // ctx.reply(`Đang tải ${info.videoDetails.title}`)
+        // // video.pipe(`./tmp/YT|${ info.videoDetails.videoId }|standard.${format.container}`)
+        // ctx.replyWithVideo({source: video})
+
+        // if (format.contentLength < 20 * 1024 * 1024) {
+        //     const url = String(format.url)
+        //     ctx.replyWithVideo(url)
+        //     // { url: url, filename: `YT|${ info.videoDetails.videoId }|standard.${format.container}` }
+        // }
+        return;
+    }
+    ctx.scene.enter("video")
 })
 
 bot.command("sendreport", ctx => {
     msg = ctx.message.text.replace(/^\/(\S+)(\s+)?/, "")
-    if (msg) {
-        msg = ": " + msg
-    }
-    else { msg = "!" }
-    bot.telegram.sendMessage(report_id, "Report from id " + ctx.chat.id + msg);
+    msg = msg ? ": " + msg : msg = "!";
+    bot.telegram.sendMessage(tg_report_id, "Report from id " + ctx.chat.id + msg);
 })
 bot.command("opps", ctx => {
     ctx.reply(opps())
@@ -290,26 +451,26 @@ bot.command("id", ctx => {
     if (tele_id) ctx.reply(tele_id)
 })
 bot.command("detail", (ctx) => {
-    ctx.reply(ctx.chat);
+    ctx.reply(JSON.stringify(ctx.message, null, 4));
 })
 
-bot.catch(e => { console.error("Bot Catch: ", e.toString(), e.stack.split("\n").slice(0, 4).join("\n")); })
+bot.catch(e => {
+    var message = ["Bot Catch: ", e.toString(), e.stack.split("\n").slice(0, 4).join("\n")].join();
+    console.error(message);
+
+})
 bot.launch();
 
 // Bot Function
 function handingAxiosError(error, pre = "") {
     msg = "Axios Error: " + pre + eol;
-    if (error.response) {
-        msg += error.response.status + eol;
-        msg += error.response.headers;
-    } else if (error.request) {
+    if (error.response) { msg += "status " + error.response.status; }
+    else if (error.request) {
         msg += "No response was received";
         //(error.request);
-    } else {
-        msg += (error.message);
     }
-    console.log(msg)
-    bot.telegram.sendMessage(report_id, msg)
+    else { msg += (error.message); }
+    return msg;
 }
 function secondsToDhms(seconds, short = true) {
     seconds = Number(seconds);
@@ -349,25 +510,43 @@ function system_check() {
     return ""
         + "System Uptime: " + secondsToDhms(os.uptime()) + eol
         + `RAM Usage: ${ram_used}MB / ${ram_total}MB, ${Math.round(10000 * ram_used / ram_total) / 100}%` + eol
-        + `CPU Usage: ${perc}%`
+        + `CPU Usage: ${perc}%` + eol;
 }
-function opps() { return "Opps...\nĐã xảy ra lỗi gì đó!\nChúng tôi sẽ sớm sửa lại.\nLiên hệ @quoctrieudev"; }
+async function process_check() {
+    const stats = await pidusage(process.pid)
+    return String()
+        + "PID: " + stats.pid + eol
+        + "PPID: " + stats.ppid + eol
+        + "CPU: " + (Math.round(stats.cpu * 100) / 100) + "%" + eol
+        + "RAM: " + Math.round(stats.memory / 1024 / 1024) + "MB" + eol
+        + "Elapsed: " + secondsToDhms(stats.elapsed / 1000) + eol
+        + "Start: " +  moment(stats.timestamp).format("YYYY-MM-D hh:mm:ss Z") + eol;
+}
 
-function error(type, detail) {
 
+function send_report(msg, option) {
+    option = Object.assign(
+        {},
+        {
+            date_time: date(),
+            report_id: tg_report_id,
+            chat: null,
+        },
+        option
+    )
+    msg = String()
+        + option.date_time + eol
+        + msg + eol + eol
+        + (option.chat ? JSON.stringify(option.chat) + eol : "")
+    bot.telegram.sendMessage(option.report_id, msg)
 }
 
 // Cron job
-const sys_report = new CronJob('0 0,12 * * *', function () {
-    var date = new Date();
-    date_opts = {
-        timeZone: "Asia/Ho_Chi_Minh"
-    }
-    var msg = date.toLocaleDateString("vi-VN", date_opts) + " " + date.toLocaleTimeString("vi-VN", date_opts) + " UTC +7:00" + eol + eol
-        + system_check();
-    bot.telegram.sendMessage(admin_id, "" + msg);
+const sys_report = new CronJob('0 0,12 * * *', async function () {
+    var msg = moment().zone("-08:00").format("YYYY-MM-D hh:mm:ss Z") + eol + "PROCESS\n" + (await process_check()) + "SYSTEM\n" + system_check();
+    bot.telegram.sendMessage(tg_report_id, "" + msg);
 }, null, true, 'Asia/Ho_Chi_Minh');
-const keep_awake = new CronJob('*/30 * * * *', () => {
+const keep_awake = new CronJob('*/20 * * * *', () => {
     if (process.env.IDLING != "1") {
         axios.get(process.env.APP_BASE_URL + "/awake");
         process.env.IDLING = "1"
@@ -382,6 +561,7 @@ keep_awake.start();
 // Start app for heroku
 const express = require('express')
 const body_parser = require("body-parser");
+const { json } = require('express');
 const app = express()
 app.use(express.static('public'))
 app.use(body_parser.urlencoded({ extended: false }));
@@ -408,9 +588,12 @@ const server = app.listen(process.env.PORT || 3000, () => console.log('Server is
 // graceful stop
 function graceful_stop() {
     console.log("Stopping...");
-    bot.telegram.setWebhook("https://bot-tele-ntdm.herokuapp.com/telegram:ntdm")
-        .then(() => console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm"))
-        .catch(() => console.error("Unsuccess Webhook set"));
+    if (!DEV_MODE) {
+        bot.telegram.setWebhook("https://bot-tele-ntdm.herokuapp.com/telegram:ntdm")
+            .then(() => console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm"))
+            .catch(() => console.error("Unsuccess Webhook set"));
+    }
+
     server.close();
     console.log("Close http server");
     keep_awake.stop();
