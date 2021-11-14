@@ -6,7 +6,6 @@ const os = require("os");
 const events = require('events');
 require('dotenv').config();
 const pidusage = require('pidusage');
-const moment = require('moment')
 const CronJob = require('cron').CronJob;
 
 const axios = require('axios').default;
@@ -28,6 +27,9 @@ const ntdm_api = axios.create({
 });
 const opps = () => { return "Opps...\nĐã xảy ra lỗi gì đó!\nChúng tôi sẽ sớm sửa lại.\nLiên hệ @quoctrieudev"; }
 const eol = os.EOL;
+
+const moment = require('moment')
+
 // Telegram
 const token = DEV_MODE ? process.env.BOT_DEV_TOKEN : process.env.BOT_TOKEN
 const tg_report_id = process.env.TG_GROUP_REPORT
@@ -318,7 +320,9 @@ bot.help(ctx => {
                         {
                             text: "🌐 Website: FayeDark.com",
                             url: "https://www.fayedark.com"
-                        },
+                        }
+                    ],
+                    [
                         {
                             text: "Fanpage",
                             url: "https://facebook.com/FayeRelax"
@@ -442,7 +446,7 @@ bot.command("sendreport", ctx => {
     var rp_content = ctx.message.text.replace(/^\/(\S+)(\s+)?/, "");
     var detail = String()
         + "Report from id: " + ctx.message.chat.id + eol
-        + "Date: " + moment(ctx.message.date).zone("+07:00").format("YYYY-MM-D hh:mm:ss Z") + eol
+        + "Date: " + moment(ctx.message.date).utcOffset(420).format("YYYY-MM-D hh:mm:ss Z") + eol;
     if (rp_content) {
         detail += "----CONTENT----" + eol
             + rp_content + eol
@@ -537,7 +541,7 @@ async function process_check() {
         + "CPU: " + (Math.round(stats.cpu * 100) / 100) + "%" + eol
         + "RAM: " + Math.round(stats.memory / 1024 / 1024) + "MB" + eol
         + "Elapsed: " + secondsToDhms(stats.elapsed / 1000) + eol
-        + "Start: " + moment(stats.timestamp).format("YYYY-MM-D hh:mm:ss Z") + eol;
+        + "Start: " + moment(stats.timestamp).utcOffset(420).format("YYYY-MM-D hh:mm:ss Z") + eol;
 }
 
 
@@ -561,7 +565,7 @@ function send_report(msg, option) {
 // Cron job
 const sys_report = new CronJob('0 0,12 * * *',
     async function () {
-        var msg = moment().zone("+07:00").format("YYYY-MM-D hh:mm:ss Z") + eol + "PROCESS\n" + (await process_check()) + "SYSTEM\n" + system_check();
+        var msg = moment().utcOffset(420).format("YYYY-MM-D hh:mm:ss Z") + eol + "PROCESS\n" + (await process_check()) + "SYSTEM\n" + system_check();
         bot.telegram.sendMessage(tg_report_id, "" + msg);
     },
     null, true,
@@ -569,7 +573,7 @@ const sys_report = new CronJob('0 0,12 * * *',
 );
 
 const dậy_đi = new CronJob(
-    "4 30 * * *",
+    "30 4 * * *",
     function () {
         var msg1 = "4h30 rồi, dậy đi";
         var msg2 = "Chúc cậu một ngày tốt lành " + randomEmoji.random({count: 1})[0];
