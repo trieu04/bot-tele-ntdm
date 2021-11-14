@@ -15,6 +15,8 @@ const mysql = require('mysql')
 const progress = require('progress-stream');
 const search = require('youtube-search');
 const ytdl = require('ytdl-core');
+const randomEmoji = require('random-emoji');
+
 
 const DEV_MODE = process.env.MODE == "dev" ? true : false;
 
@@ -244,8 +246,8 @@ stage.command("cancel", ctx => ctx.scene.leave())
 bot.use(session())
 bot.use(stage.middleware())
 bot.use((ctx, next) => {
-    if (ctx.chat && ctx.chat.hasOwnProperty("id")) {
-        tele_id = ctx.chat.id;
+    if (ctx.message && ctx.message.chat) {
+        tele_id = ctx.message.chat.id;
         process.env.IDLING = "0";
     }
     update_id = ctx.update && ctx.update.update_id ? ctx.update.update_id : 0;
@@ -437,22 +439,37 @@ bot.command("video", async ctx => {
 })
 
 bot.command("sendreport", ctx => {
-    msg = ctx.message.text.replace(/^\/(\S+)(\s+)?/, "")
-    msg = msg ? ": " + msg : msg = "!";
-    bot.telegram.sendMessage(tg_report_id, "Report from id " + ctx.chat.id + msg);
-})
+    var rp_content = ctx.message.text.replace(/^\/(\S+)(\s+)?/, "");
+    var detail = String()
+        + "Report from id: " + ctx.message.chat.id + eol
+        + "Date: " + moment(ctx.message.date).zone("+07:00").format("YYYY-MM-D hh:mm:ss Z") + eol
+    if (rp_content) {
+        detail += "----CONTENT----" + eol
+            + rp_content + eol
+            + "---------" + eol
+    } else{
+        detail += "Content: Empty" + eol;
+    }
+    if(ctx.message.reply_to_message){
+        detail += "----RP_REPLY_CONTENT----" + eol
+        + ctx.message.reply_to_message + eol
+        + "---------" + eol
+    }
+    bot.telegram.sendMessage(tg_report_id, detail);
+    ctx.reply("The report has been sent");
+});
+
 bot.command("opps", ctx => {
     ctx.reply(opps())
 });
+
 bot.command("ntdm", ctx => {
     ctx.reply("TQT")
-})
-bot.command("id", ctx => {
-    if (tele_id) ctx.reply(tele_id)
-})
+});
+
 bot.command("detail", (ctx) => {
     ctx.reply(JSON.stringify(ctx.message, null, 4));
-})
+});
 
 bot.catch(e => {
     var message = ["Bot Catch: ", e.toString(), e.stack.split("\n").slice(0, 4).join("\n")].join();
@@ -520,7 +537,7 @@ async function process_check() {
         + "CPU: " + (Math.round(stats.cpu * 100) / 100) + "%" + eol
         + "RAM: " + Math.round(stats.memory / 1024 / 1024) + "MB" + eol
         + "Elapsed: " + secondsToDhms(stats.elapsed / 1000) + eol
-        + "Start: " +  moment(stats.timestamp).format("YYYY-MM-D hh:mm:ss Z") + eol;
+        + "Start: " + moment(stats.timestamp).format("YYYY-MM-D hh:mm:ss Z") + eol;
 }
 
 
@@ -533,30 +550,49 @@ function send_report(msg, option) {
             chat: null,
         },
         option
-    )
+    );
     msg = String()
         + option.date_time + eol
         + msg + eol + eol
-        + (option.chat ? JSON.stringify(option.chat) + eol : "")
-    bot.telegram.sendMessage(option.report_id, msg)
+        + (option.chat ? JSON.stringify(option.chat) + eol : "");
+    bot.telegram.sendMessage(option.report_id, msg);
 }
 
 // Cron job
-const sys_report = new CronJob('0 0,12 * * *', async function () {
-    var msg = moment().zone("-08:00").format("YYYY-MM-D hh:mm:ss Z") + eol + "PROCESS\n" + (await process_check()) + "SYSTEM\n" + system_check();
-    bot.telegram.sendMessage(tg_report_id, "" + msg);
-}, null, true, 'Asia/Ho_Chi_Minh');
-const keep_awake = new CronJob('*/20 * * * *', () => {
-    if (process.env.IDLING != "1") {
-        axios.get(process.env.APP_BASE_URL + "/awake");
-        process.env.IDLING = "1"
-    }
-    else {
-        keep_awake.stop()
-    }
-})
-sys_report.start();
-keep_awake.start();
+const sys_report = new CronJob('0 0,12 * * *',
+    async function () {
+        var msg = moment().zone("+07:00").format("YYYY-MM-D hh:mm:ss Z") + eol + "PROCESS\n" + (await process_check()) + "SYSTEM\n" + system_check();
+        bot.telegram.sendMessage(tg_report_id, "" + msg);
+    },
+    null, true,
+    'Asia/Ho_Chi_Minh'
+);
+
+const dậy_đi = new CronJob(
+    "4 30 * * *",
+    function () {
+        var msg1 = "4h30 rồi, dậy đi";
+        var msg2 = "Chúc cậu một ngày tốt lành " + randomEmoji.random({count: 1})[0];
+        bot.telegram.sendMessage(1455276034, msg1);
+        bot.telegram.sendMessage(1455276034, msg2);
+    },
+    null, true,
+    'Asia/Ho_Chi_Minh'
+);
+
+const keep_awake = new CronJob(
+    '*/20 * * * *',
+    function () {
+        if (process.env.IDLING != "1") {
+            axios.get(process.env.APP_BASE_URL + "/awake");
+            process.env.IDLING = "1"
+        }
+        else {
+            keep_awake.stop()
+        }
+    },
+    null, true
+);
 
 // Start app for heroku
 const express = require('express')
@@ -598,6 +634,7 @@ function graceful_stop() {
     console.log("Close http server");
     keep_awake.stop();
     sys_report.stop();
+    dậy_đi.stop();
     console.log("Stop cron jobs");
 }
 process.once('SIGINT', () => {
