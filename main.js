@@ -301,7 +301,7 @@ bot.command("sendreport", ctx => {
     }
     if (ctx.message.reply_to_message) {
         content += "NỘI DUNG TỪ TRẢ LỜI TIN NHẮN" + lf
-        + rp_content + lf
+        + ctx.message.reply_to_message.text + lf
         + "----------" + lf;
     }
     if(content){
