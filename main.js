@@ -182,19 +182,19 @@ bot.command("givekey", async ctx => {
         if (res.data.length != 0) {
             const repl_text = "Đã lấy 1 key: \n" +
                 JSON.stringify(res.data[0]);
-            bot.telegram.editMessageText(tele_id, reply.message_id, undefined, repl_text);
+            bot.telegram.editMessageText(reply.chat.id, reply.message_id, undefined, repl_text);
             ctx.reply(res.data[0].license_key);
         }
         else {
             const repl_text = "Hết key rồi :)";
-            bot.telegram.editMessageText(tele_id, reply.message_id, undefined, repl_text);
+            bot.telegram.editMessageText(reply.chat.id, reply.message_id, undefined, repl_text);
         }
     }
     else {
         const repl_text = "Đã xảy ra lỗi gì đó"
             + "status: " + res.status + "\n"
             + "data(JSON): " + JSON.stringify(res.data);
-        bot.telegram.editMessageText(tele_id, reply.message_id, undefined, repl_text);
+        bot.telegram.editMessageText(reply.chat.id, reply.message_id, undefined, repl_text);
     }
 
 });
@@ -204,7 +204,7 @@ bot.command("keywarp", async ctx => {
     const reply = await ctx.reply("Đang tìm kiếm");
     const res = await ntdm_api.get("cfwarp/key/list", { params: { "cond": `["telegram_id_owner","=","${tele_id}"]`, 'cols': 'id,license_key' } }).catch((e) => {
         var err = handingAxiosError(e);
-        bot.telegram.editMessageText(tele_id, reply.message_id, undefined, ":((\nĐã xảy ra lỗi - Đã có lỗi khi kết nối tới máy chủ.\nVui lòng thử lại sau!");
+        bot.telegram.editMessageText(reply.chat.id, reply.message_id, undefined, ":((\nĐã xảy ra lỗi - Đã có lỗi khi kết nối tới máy chủ.\nVui lòng thử lại sau!");
         send_report(err, { chat: ctx.message });
     });
     if (!res) return;
@@ -216,12 +216,12 @@ bot.command("keywarp", async ctx => {
                 + "Key CloudFlare Warp đã gửi:\n"
                 + '`' + res.data[0].license_key + '`\n'
                 + '`' + res.data[1].license_key + '`\n'
-            bot.telegram.editMessageText(tele_id, reply.message_id, undefined, repl_text_2, { parse_mode: "Markdown" });
+            bot.telegram.editMessageText(reply.chat.id, reply.message_id, undefined, repl_text_2, { parse_mode: "Markdown" });
         }
         else {
             const res_2 = await ntdm_api.put("cfwarp/key/give", { 'telegram_id': tele_id }).catch((e) => {
                 var err = handingAxiosError(e);
-                bot.telegram.editMessageText(tele_id, reply.message_id, undefined, ":((\nĐã xảy ra lỗi - Đã có lỗi khi kết nối tới máy chủ.\nVui lòng thử lại sau!");
+                bot.telegram.editMessageText(reply.chat.id, reply.message_id, undefined, ":((\nĐã xảy ra lỗi - Đã có lỗi khi kết nối tới máy chủ.\nVui lòng thử lại sau!");
                 send_report(err, { chat: ctx.message });
             });
             if (!res_2) return;
@@ -233,12 +233,12 @@ bot.command("keywarp", async ctx => {
                     send_report(`Hết Key | Yêu cầu từ ID ${ctx.from.id}`);
                 }
                 else {
-                    bot.telegram.editMessageText(tele_id, reply.message_id, undefined, "Đã Xong!\nKey CloudFlare Warp của bạn đây nhé:");
+                    bot.telegram.editMessageText(reply.chat.id, reply.message_id, undefined, "Đã Xong!\nKey CloudFlare Warp của bạn đây nhé:");
                     ctx.reply(res_2.data[0].license_key);
                 }
             }
             else {
-                bot.telegram.editMessageText(tele_id, reply.message_id, undefined, ":((\nĐã xảy ra lỗi với máy chủ.\nVui lòng thử lại sau!");
+                bot.telegram.editMessageText(reply.chat.id, reply.message_id, undefined, ":((\nĐã xảy ra lỗi với máy chủ.\nVui lòng thử lại sau!");
                 send_report(`Lỗi API`,
                     {
                         'more':
@@ -254,7 +254,7 @@ bot.command("keywarp", async ctx => {
         }
     }
     else {
-        bot.telegram.editMessageText(tele_id, reply.message_id, undefined, ":((\nĐã xảy ra lỗi với máy chủ.\nVui lòng thử lại sau!");
+        bot.telegram.editMessageText(reply.chat.id, reply.message_id, undefined, ":((\nĐã xảy ra lỗi với máy chủ.\nVui lòng thử lại sau!");
         send_report(`Lỗi API`,
             {
                 'more':
