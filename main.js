@@ -213,7 +213,7 @@ bot.command("keywarp", async ctx => {
             var repl_text_2 = ""
                 + "Bạn đã yêu cầu nhận key trước đó rồi\n"
                 + "Mỗi người chỉ được nhận 2 key thôi nha, muốn thêm ib tui :>\n"
-                + "Key CloudFlare Warp 1.1.1.1 đã gửi:\n"
+                + "Key CloudFlare Warp đã gửi:\n"
                 + '`' + res.data[0].license_key + '`\n'
                 + '`' + res.data[1].license_key + '`\n'
             bot.telegram.editMessageText(tele_id, reply.message_id, undefined, repl_text_2, { parse_mode: "Markdown" });
@@ -233,7 +233,7 @@ bot.command("keywarp", async ctx => {
                     send_report(`Hết Key | Yêu cầu từ ID ${ctx.from.id}`);
                 }
                 else {
-                    bot.telegram.editMessageText(tele_id, reply.message_id, undefined, "Đã Xong!\nKey CloudFlare Warp 1.1.1.1 của bạn đây nhé:");
+                    bot.telegram.editMessageText(tele_id, reply.message_id, undefined, "Đã Xong!\nKey CloudFlare Warp của bạn đây nhé:");
                     ctx.reply(res_2.data[0].license_key);
                 }
             }
@@ -289,25 +289,31 @@ bot.command("keywarp", async ctx => {
 });
 
 bot.command("sendreport", ctx => {
-    var rp_content = ctx.message.text.replace(/^\/(\S+)(\s+)?/, "");
     var detail = String()
         + "Report from id: " + ctx.message.chat.id + lf
         + "Date: " + moment(ctx.message.date * 1000).utcOffset(420).format("YYYY-MM-D hh:mm:ss Z") + lf;
+    var content = "";
+    var rp_content = ctx.message.text.replace(/^\/(\S+)(\s+)?/, "");
     if (rp_content) {
-        detail += "----CONTENT----" + lf
+        content += "NỘI DUNG" + lf
             + rp_content + lf
-            + "---------" + lf
-    } else {
-        detail += "Content: Empty" + lf;
+            + "----------" + lf
     }
     if (ctx.message.reply_to_message) {
-        detail += "----RP_REPLY_CONTENT----" + lf
-            + ctx.message.reply_to_message + lf
-            + "---------" + lf
+        content += "NỘI DUNG TỪ TRẢ LỜI TIN NHẮN" + lf
+        + rp_content + lf
+        + "----------" + lf;
     }
-    detail += lf + JSON.stringify(ctx.message);
-    bot.telegram.sendMessage(tg_report_id, detail);
-    ctx.reply("The report has been sent");
+    if(content){
+        detail += content + lf + JSON.stringify(ctx.message);
+        bot.telegram.sendMessage(tg_report_id, detail);
+
+        ctx.reply("Báo cáo đã được gửi đi" + lf + content);
+    }
+    else {
+        ctx.reply("Vui lòng nhập nội dung cần báo cáo sau câu lệnh hoặc trả lời tin nhắn chứa nội dung");
+    }
+
 });
 
 bot.command("opps", ctx => {
