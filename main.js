@@ -78,8 +78,8 @@ bot.start(ctx => {
 bot.help(ctx => {
     if (tele_id == tg_admin_id) {
         var reply = ""
-            + "Faye Bot" + lf
-            + "/help" + lf
+            + "_Faye Bot V1.1_" + lf
+            + "/help - Danh sách lệnh" + lf
             + "/process" + lf
             + "/system" + lf
             + "/uptime" + lf + lf
@@ -104,39 +104,29 @@ bot.help(ctx => {
                 ],
                 resize_keyboard: true,
                 one_time_keyboard: true,
-            }
+            },
+            parse_mode: "Markdown"
         });
     }
     else {
         var reply = ""
             + "Sau đây là các lệnh bạn có thể thực hiện với Faye Bot\n\n"
-            + "✅ /help Lấy danh sách các lệnh được hỗ trợ\n"
-            + "✅ /keywarp Nhận key warp+ miễn phí\n"
+            + "➪ /help Lấy danh sách các lệnh được hỗ trợ\n"
+            + "➪ /keywarp Nhận key warp+ miễn phí\n"
+            + "➪ /info Thông tin Bot\n"
 
         ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
             reply_markup: {
                 inline_keyboard: [
                     [
-                        {
-                            text: "🌐 Website: FayeDark.com",
-                            url: "https://www.fayedark.com"
-                        }
+                        { text: "🌐 Website: FayeDark.com", url: "https://www.fayedark.com" }
                     ],
                     [
-                        {
-                            text: "Fanpage",
-                            url: "https://facebook.com/FayeRelax"
-                        },
-                        {
-                            text: "My Group",
-                            url: "https://facebook.com/groups/nknhh"
-                        }
+                        { text: "Fanpage", url: "https://facebook.com/FayeRelax" },
+                        { text: "My Group", url: "https://facebook.com/groups/nknhh" }
                     ],
                     [
-                        {
-                            text: "Ủng hộ chúng tôi! 💖",
-                            url: "https://www.fayedark.com/p/ung-ho-chung-toi.html"
-                        }
+                        { text: "Ủng hộ chúng tôi! 💖", url: "https://www.fayedark.com/p/ung-ho-chung-toi.html" }
                     ]
                 ]
             }
@@ -146,7 +136,7 @@ bot.help(ctx => {
 bot.command('info', ctx => {
     var repl_text = "<b>Faye Bot Verson 1.1</b>" + lf
         + "<i>Date Updated:</i> 23/03/2022" +lf
-        + "<i>Author:</i> @QuocTrieudev";
+        + "@QuocTrieudev";
     ctx.reply(repl_text, {parse_mode: "HTML"});
 })
 
@@ -460,9 +450,6 @@ const list_cron = new Array(
             if (process.env.IDLING != "1") {
                 axios.get(process.env.APP_BASE_URL + "/awake");
                 process.env.IDLING = "1"
-            }
-            else {
-                keep_awake.stop()
             }
         },
         null, true
