@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "MODE=dev node server.js",
-    "start": "node server.js"
+    "test": "MODE=dev node main.js",
+    "start": "node main.js"
   },
   "keywords": [],
   "author": "QuocTrieuDEV",
@@ -21,6 +21,7 @@
     "moment": "^2.29.1",
     "mongoose": "^6.0.10",
     "mysql": "^2.18.1",
+    "performance-now": "^2.1.0",
     "pidusage": "^3.0.0",
     "progress-stream": "^2.0.0",
     "random-emoji": "^1.0.2",

@@ -27,3 +27,11 @@ mysqlc.query('SELECT * FROM yt-media', function (error, results, fields) {
 });
 
 
+// // MySQL Database
+// const mysqlc = mysql.createConnection({
+//     host: 'free01.123host.vn',
+//     user: 'quoctrie',
+//     password: '0fCoDEABM1wz3uE',
+//     database: 'quoctrie_faye'
+// })
+// mysqlc.connect();
