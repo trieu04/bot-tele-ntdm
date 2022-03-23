@@ -435,8 +435,10 @@ function send_report(msg, option) {
 const list_cron = new Array(
     new CronJob('0 0,12 * * *',
         async function () {
-            var msg = moment().utcOffset(420).format("YYYY-MM-D hh:mm:ss Z") + lf + "PROCESS\n" + (await process_check()) + "SYSTEM\n" + system_check();
-            bot.telegram.sendMessage(tg_report_id, "" + msg);
+            var msg = "*" + moment().utcOffset(420).format("YYYY-MM-D hh:mm:ss Z") + "*" + lf + lf
+            +  (await process_check()) + lf
+            +  system_check();
+            bot.telegram.sendMessage(tg_report_id, "" + msg, {parse_mode: "Markdown"});
         },
         null, true,
         'Asia/Ho_Chi_Minh'
