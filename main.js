@@ -21,6 +21,7 @@ const mysql = require('mysql')
 const speed = require(`performance-now`);
 
 const DEV_MODE = process.env.MODE == "dev" ? true : false;
+const inHeroku = (() => {if (process.env._ && process.env._.indexOf("heroku") !== -1) return true; else return false})();
 
 const ntdm_api = axios.create({
     baseURL: 'http://api.quoctrieudev.com/v1',
@@ -233,9 +234,9 @@ bot.command("keywarp", async ctx => {
                     {
                         'more':
                         {
-                            'status': res_2.status,
-                            'data': res_2.data,
-                            'config': res_2.config
+                            'status': res_2?.status,
+                            'data': res_2?.data,
+                            'config': res_2?.config
                         }
                     }
                 );
@@ -249,9 +250,9 @@ bot.command("keywarp", async ctx => {
             {
                 'more':
                 {
-                    'status': res_2.status,
-                    'data': res_2.data,
-                    'config': res_2.config
+                    'status': res_2?.status,
+                    'data': res_2?.data,
+                    'config': res_2?.config
                 }
             }
         );
@@ -422,39 +423,22 @@ function send_report(msg, option) {
 }
 
 // Cron job
-const list_cron = new Array(
-    new CronJob('0 0,12 * * *',
-        async function () {
-            var msg = "*" + moment().utcOffset(420).format("YYYY-MM-D hh:mm:ss Z") + "*" + lf + lf
-            +  (await process_check()) + lf
-            +  system_check();
-            bot.telegram.sendMessage(tg_report_id, "" + msg, {parse_mode: "Markdown"});
-        },
-        null, true,
-        'Asia/Ho_Chi_Minh'
-    ),
-    new CronJob(
-        "30 4 * * *",
-        function () {
-            var msg1 = "Dậy đi bạn ơi...";
-            var msg2 = (0 ? "Chúc cậu một ngày tốt lành " : "") + randomEmoji.random({ count: 1 })[0].character;
-            bot.telegram.sendMessage(1455276034, msg1);
-            bot.telegram.sendMessage(1455276034, msg2);
-        },
-        null, true,
-        'Asia/Ho_Chi_Minh'
-    ),
-    new CronJob(
-        '*/20 * * * *',
-        function () {
-            if (process.env.IDLING != "1") {
-                axios.get(process.env.APP_BASE_URL + "/awake");
-                process.env.IDLING = "1"
-            }
-        },
-        null, true
+const list_cron = new Array();
+
+if(inHeroku){
+    list_cron.push(
+        new CronJob(
+            '*/20 * * * *',
+            function () {
+                if (process.env.IDLING != "1") {
+                    axios.get(process.env.APP_BASE_URL + "/awake");
+                    process.env.IDLING = "1"
+                }
+            },
+            null, true
+        )
     )
-)
+}
 
 // Start app for heroku
 
@@ -483,7 +467,7 @@ const server = app.listen(process.env.PORT || 3000, () => console.log('Server is
 // graceful stop
 function graceful_stop() {
     console.log("Stopping...");
-    if (!DEV_MODE) {
+    if (!DEV_MODE && inHeroku) {
         bot.telegram.setWebhook("https://bot-tele-ntdm.herokuapp.com/telegram:ntdm")
             .then(() => console.log("Webhook set to https://bot-tele-ntdm.herokuapp.com/telegram:ntdm"))
             .catch(() => console.error("Unsuccess Webhook set"));
@@ -492,7 +476,7 @@ function graceful_stop() {
     server.close();
     console.log("Close http server");
     for (const cron of list_cron) { cron.stop(); }
-    console.log("Stop cron jobs");
+    console.log(`Stop ${ list_cron.length } cron jobs`);
 }
 process.once('SIGINT', () => {
     bot.stop('SIGINT')
