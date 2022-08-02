@@ -38,6 +38,7 @@ const token = DEV_MODE ? process.env.BOT_DEV_TOKEN : process.env.BOT_TOKEN
 const tg_report_id = process.env.TG_GROUP_REPORT
 const tg_admin_id = process.env.TG_ADMIN
 const tg_filestore_id = process.env.TG_GROUP_FILE
+const tg_id_block_list = []
 
 var tele_id;
 var update_id;
@@ -66,7 +67,8 @@ bot.start(ctx => {
         + "Tôi là Faye Bot, Rất vui được trò chuyện cùng bạn. Cùng với FayeDark.com, chúng tôi cố gắng hỗ trợ tất cả mọi người trong những lúc cần thiết. Bạn có thể xem những thứ mà tôi có thể giúp thông qua lệnh /help, đơn giản vậy thôi. Chúc bạn có một ngày tốt lành!\n"
         + "Cám ơn vì đã ghé qua :33\n\n"
         + "Mọi thông tin góp ý xin hãy gửi về @quoctrieudev. Chúng tôi xin ghi nhận ý kiến của bạn để cải thiện nhiều tính năng và thông tin bổ ích hơn nha.";
-    ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
+        
+        ctx.telegram.sendMessage(ctx.message.chat.id, reply, {
         reply_markup: {
             keyboard: [
                 [{ "text": "/help" }]
