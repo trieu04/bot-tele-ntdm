@@ -1,0 +1,1306 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+[]
+PS E:\Project\bot-tele-ntdm> node test.js
+[
+  {
+    update_id: 410243504,
+    message: {
+      message_id: 1896,
+      from: [Object],
+      chat: [Object],
+      date: 1661735326,
+      text: 'lnao'
+    }
+]
+PS E:\Project\bot-tele-ntdm> node test.js
+[
+  {
+    update_id: 410243504,
+    message: {
+      message_id: 1896,
+      from: [Object],
+      chat: [Object],
+      date: 1661735326,
+      text: 'lnao'
+    }
+]
+PS E:\Project\bot-tele-ntdm> node saveupdate.txt
+node:internal/modules/cjs/loader:936
+  throw err;
+  ^
+
+Error: Cannot find module 'E:\Project\bot-tele-ntdm\saveupdate.txt'
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)
+    at Function.Module._load (node:internal/modules/cjs/loader:778:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+    at node:internal/main/run_main_module:17:47 {
+  code: 'MODULE_NOT_FOUND',
+}
+PS E:\Project\bot-tele-ntdm> node saveupdate.js 
+E:\Project\bot-tele-ntdm\saveupdate.js:8
+fs.writeFile('/Users/joe/test.txt', content, err => {
+                                    ^
+
+ReferenceError: content is not defined
+    at Object.<anonymous> (E:\Project\bot-tele-ntdm\saveupdate.js:8:37)
+    at Module._compile (node:internal/modules/cjs/loader:1101:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+    at node:internal/main/run_main_module:17:47
+PS E:\Project\bot-tele-ntdm> node saveupdate.js
+[
+  {
+    update_id: 410243504,
+    message: {
+      from: [Object],
+      chat: [Object],
+      date: 1661735326,
+      text: 'lnao'
+    }
+  }
+]
+E:\Project\bot-tele-ntdm\saveupdate.js:15
+    fs.writeFile('./update.txt', JSON.stringify(update, undefined, 4), err => {if (err) {  console.error(err);} });s
+                                                                                                                   ^
+
+ReferenceError: s is not defined
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+PS E:\Project\bot-tele-ntdm> node saveupdate.js
+[
+  {
+    update_id: 410243504,
+    message: {
+      message_id: 1896,
+      from: [Object],
+      chat: [Object],
+      date: 1661735326,
+      text: 'lnao'
+    }
+  }
+]
+PS E:\Project\bot-tele-ntdm> node saveupdate.js
+[
+  {
+    update_id: 602082820,
+    message: {
+      message_id: 57962,
+      from: [Object],
+      chat: [Object],
+      date: 1661705651,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082821,
+    message: {
+      message_id: 57963,
+      from: [Object],
+      chat: [Object],
+      date: 1661705659,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082822,
+    message: {
+      message_id: 57964,
+      from: [Object],
+      chat: [Object],
+      date: 1661705677,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082823,
+    message: {
+      message_id: 57965,
+      from: [Object],
+      chat: [Object],
+      date: 1661705680,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082824,
+    message: {
+      message_id: 57966,
+      from: [Object],
+      chat: [Object],
+      date: 1661705687,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082825,
+    message: {
+      message_id: 57967,
+      from: [Object],
+      chat: [Object],
+      date: 1661705689,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082826,
+    message: {
+      message_id: 57968,
+      from: [Object],
+      chat: [Object],
+      date: 1661705689,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082827,
+    message: {
+      message_id: 57969,
+      from: [Object],
+      chat: [Object],
+      date: 1661705704,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082828,
+    message: {
+      message_id: 57970,
+      from: [Object],
+      chat: [Object],
+      date: 1661705714,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082829,
+    message: {
+      message_id: 57971,
+      from: [Object],
+      chat: [Object],
+      date: 1661705727,
+      text: '/help',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082830,
+    message: {
+      message_id: 57972,
+      from: [Object],
+      chat: [Object],
+      date: 1661705728,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082831,
+    message: {
+      message_id: 57973,
+      from: [Object],
+      chat: [Object],
+      date: 1661705729,
+      text: '/info',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082832,
+    message: {
+      message_id: 57974,
+      from: [Object],
+      chat: [Object],
+      date: 1661705771,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082833,
+    message: {
+      message_id: 57975,
+      from: [Object],
+      chat: [Object],
+      date: 1661705775,
+      text: '/system',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082834,
+    message: {
+      message_id: 57976,
+      from: [Object],
+      chat: [Object],
+      date: 1661705777,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082835,
+    message: {
+      message_id: 57977,
+      from: [Object],
+      chat: [Object],
+      date: 1661705782,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082836,
+    message: {
+      message_id: 57978,
+      from: [Object],
+      chat: [Object],
+      date: 1661705784,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082837,
+    message: {
+      message_id: 57979,
+      from: [Object],
+      chat: [Object],
+      date: 1661705785,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082838,
+    message: {
+      message_id: 57980,
+      from: [Object],
+      chat: [Object],
+      date: 1661705785,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082839,
+    message: {
+      message_id: 57981,
+      from: [Object],
+      chat: [Object],
+      date: 1661705787,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082840,
+    message: {
+      message_id: 57982,
+      from: [Object],
+      chat: [Object],
+      date: 1661705797,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082841,
+    message: {
+      message_id: 57983,
+      from: [Object],
+      chat: [Object],
+      date: 1661705802,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082842,
+    message: {
+      message_id: 57984,
+      from: [Object],
+      chat: [Object],
+      date: 1661705803,
+      text: '/help',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082843,
+    message: {
+      message_id: 57985,
+      from: [Object],
+      chat: [Object],
+      date: 1661705812,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082844,
+    message: {
+      message_id: 57986,
+      from: [Object],
+      chat: [Object],
+      date: 1661705818,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082845,
+    message: {
+      message_id: 57987,
+      from: [Object],
+      chat: [Object],
+      date: 1661705831,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082846,
+    message: {
+      message_id: 57988,
+      from: [Object],
+      chat: [Object],
+      date: 1661705851,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082847,
+    message: {
+      message_id: 57989,
+      from: [Object],
+      chat: [Object],
+      date: 1661705858,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082848,
+    message: {
+      message_id: 57990,
+      from: [Object],
+      chat: [Object],
+      date: 1661705886,
+      text: '/help',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082849,
+    message: {
+      message_id: 57991,
+      from: [Object],
+      chat: [Object],
+      date: 1661705891,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082850,
+    message: {
+      message_id: 57992,
+      from: [Object],
+      chat: [Object],
+      date: 1661705896,
+      text: '/help',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082851,
+    message: {
+      message_id: 57993,
+      from: [Object],
+      chat: [Object],
+      date: 1661705897,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082852,
+    message: {
+      message_id: 57994,
+      from: [Object],
+      chat: [Object],
+      date: 1661705900,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082853,
+    message: {
+      message_id: 57995,
+      from: [Object],
+      chat: [Object],
+      date: 1661705906,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082854,
+    message: {
+      message_id: 57996,
+      from: [Object],
+      chat: [Object],
+      date: 1661705924,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082855,
+    message: {
+      message_id: 57997,
+      from: [Object],
+      chat: [Object],
+      date: 1661705936,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082856,
+    message: {
+      message_id: 57998,
+      from: [Object],
+      chat: [Object],
+      date: 1661705939,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082857,
+    message: {
+      message_id: 57999,
+      from: [Object],
+      chat: [Object],
+      date: 1661705941,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082858,
+    message: {
+      message_id: 58000,
+      from: [Object],
+      chat: [Object],
+      date: 1661705947,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082859,
+    message: {
+      message_id: 58001,
+      from: [Object],
+      chat: [Object],
+      date: 1661705962,
+      text: '/system',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082860,
+    message: {
+      message_id: 58002,
+      from: [Object],
+      chat: [Object],
+      date: 1661705970,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082861,
+    message: {
+      message_id: 58003,
+      from: [Object],
+      chat: [Object],
+      date: 1661705983,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082862,
+    message: {
+      message_id: 58004,
+      from: [Object],
+      chat: [Object],
+      date: 1661706037,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082863,
+    message: {
+      message_id: 58005,
+      from: [Object],
+      chat: [Object],
+      date: 1661706044,
+      text: '/system',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082864,
+    message: {
+      message_id: 58006,
+      from: [Object],
+      chat: [Object],
+      date: 1661706049,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082865,
+    message: {
+      message_id: 58007,
+      from: [Object],
+      chat: [Object],
+      date: 1661706056,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082866,
+    message: {
+      message_id: 58008,
+      from: [Object],
+      chat: [Object],
+      date: 1661706063,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082867,
+    message: {
+      message_id: 58009,
+      from: [Object],
+      chat: [Object],
+      date: 1661706063,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082868,
+    message: {
+      message_id: 58010,
+      from: [Object],
+      chat: [Object],
+      date: 1661706068,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082869,
+    message: {
+      message_id: 58011,
+      from: [Object],
+      chat: [Object],
+      date: 1661706070,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082870,
+    message: {
+      message_id: 58012,
+      from: [Object],
+      chat: [Object],
+      date: 1661706072,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082871,
+    message: {
+      message_id: 58013,
+      from: [Object],
+      chat: [Object],
+      date: 1661706073,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082872,
+    message: {
+      message_id: 58014,
+      from: [Object],
+      chat: [Object],
+      date: 1661706079,
+      text: '/info',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082873,
+    message: {
+      message_id: 58015,
+      from: [Object],
+      chat: [Object],
+      date: 1661706085,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082874,
+    message: {
+      message_id: 58016,
+      from: [Object],
+      chat: [Object],
+      date: 1661706091,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082875,
+    message: {
+      message_id: 58017,
+      from: [Object],
+      chat: [Object],
+      date: 1661706099,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082876,
+    message: {
+      message_id: 58018,
+      from: [Object],
+      chat: [Object],
+      date: 1661706103,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082877,
+    message: {
+      message_id: 58019,
+      from: [Object],
+      chat: [Object],
+      date: 1661706108,
+      text: '/info',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082878,
+    message: {
+      message_id: 58020,
+      from: [Object],
+      chat: [Object],
+      date: 1661706114,
+      text: '/info',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082879,
+    message: {
+      message_id: 58021,
+      from: [Object],
+      chat: [Object],
+      date: 1661706117,
+      text: '/help',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082880,
+    message: {
+      message_id: 58022,
+      from: [Object],
+      chat: [Object],
+      date: 1661706121,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082881,
+    message: {
+      message_id: 58023,
+      from: [Object],
+      chat: [Object],
+      date: 1661706128,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082882,
+    message: {
+      message_id: 58024,
+      from: [Object],
+      chat: [Object],
+      date: 1661706132,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082883,
+    message: {
+      message_id: 58025,
+      from: [Object],
+      chat: [Object],
+      date: 1661706136,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082884,
+    message: {
+      message_id: 58026,
+      from: [Object],
+      chat: [Object],
+      date: 1661706138,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082885,
+    message: {
+      message_id: 58027,
+      from: [Object],
+      chat: [Object],
+      date: 1661706159,
+      text: '/help',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082886,
+    message: {
+      message_id: 58028,
+      from: [Object],
+      chat: [Object],
+      date: 1661706162,
+      text: '/info',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082887,
+    message: {
+      message_id: 58029,
+      from: [Object],
+      chat: [Object],
+      date: 1661706165,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082888,
+    message: {
+      message_id: 58030,
+      from: [Object],
+      chat: [Object],
+      date: 1661706168,
+      text: '/sendreport',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082889,
+    message: {
+      message_id: 58031,
+      from: [Object],
+      chat: [Object],
+      date: 1661706212,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082890,
+    message: {
+      message_id: 58032,
+      from: [Object],
+      chat: [Object],
+      date: 1661706228,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082891,
+    message: {
+      message_id: 58033,
+      from: [Object],
+      chat: [Object],
+      date: 1661706234,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082892,
+    message: {
+      message_id: 58034,
+      from: [Object],
+      chat: [Object],
+      date: 1661706239,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082893,
+    message: {
+      message_id: 58035,
+      from: [Object],
+      chat: [Object],
+      date: 1661706251,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082894,
+    message: {
+      message_id: 58036,
+      from: [Object],
+      chat: [Object],
+      date: 1661706252,
+      text: '/sendreport',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082895,
+    message: {
+      message_id: 58037,
+      from: [Object],
+      chat: [Object],
+      date: 1661706256,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082896,
+    message: {
+      message_id: 58038,
+      from: [Object],
+      chat: [Object],
+      date: 1661706259,
+      text: '/process',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082897,
+    message: {
+      message_id: 58039,
+      from: [Object],
+      chat: [Object],
+      date: 1661706274,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082898,
+    message: {
+      message_id: 58040,
+      from: [Object],
+      chat: [Object],
+      date: 1661706285,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082899,
+    message: {
+      message_id: 58041,
+      from: [Object],
+      chat: [Object],
+      date: 1661706286,
+      text: '/info',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082900,
+    message: {
+      message_id: 58042,
+      from: [Object],
+      chat: [Object],
+      date: 1661706292,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082901,
+    message: {
+      message_id: 58043,
+      from: [Object],
+      chat: [Object],
+      date: 1661706293,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082902,
+    message: {
+      message_id: 58044,
+      from: [Object],
+      chat: [Object],
+      date: 1661706298,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082903,
+    message: {
+      message_id: 58045,
+      from: [Object],
+      chat: [Object],
+      date: 1661706323,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082904,
+    message: {
+      message_id: 58046,
+      from: [Object],
+      chat: [Object],
+      date: 1661706324,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082905,
+    message: {
+      message_id: 58047,
+      from: [Object],
+      chat: [Object],
+      date: 1661706328,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082906,
+    message: {
+      message_id: 58048,
+      from: [Object],
+      chat: [Object],
+      date: 1661706341,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082907,
+    message: {
+      message_id: 58049,
+      from: [Object],
+      chat: [Object],
+      date: 1661706347,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082908,
+    message: {
+      message_id: 58050,
+      from: [Object],
+      chat: [Object],
+      date: 1661706348,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082909,
+    message: {
+      message_id: 58051,
+      from: [Object],
+      chat: [Object],
+      date: 1661706353,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082910,
+    message: {
+      message_id: 58052,
+      from: [Object],
+      chat: [Object],
+      date: 1661706354,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082911,
+    message: {
+      message_id: 58053,
+      from: [Object],
+      chat: [Object],
+      date: 1661706356,
+      text: '/start',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082912,
+    message: {
+      message_id: 58054,
+      from: [Object],
+      chat: [Object],
+      date: 1661706359,
+      text: '/help',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082913,
+    message: {
+      message_id: 58055,
+      from: [Object],
+      chat: [Object],
+      date: 1661706361,
+      text: '/info',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082914,
+    message: {
+      message_id: 58056,
+      from: [Object],
+      chat: [Object],
+      date: 1661706362,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082915,
+    message: {
+      message_id: 58057,
+      from: [Object],
+      chat: [Object],
+      date: 1661706362,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082916,
+    message: {
+      message_id: 58058,
+      from: [Object],
+      chat: [Object],
+      date: 1661706363,
+      text: '/sendreport',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082917,
+    message: {
+      message_id: 58059,
+      from: [Object],
+      chat: [Object],
+      date: 1661706363,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602082918,
+    message: {
+      message_id: 58060,
+      from: [Object],
+      chat: [Object],
+      date: 1661706366,
+      text: '/detail',
+  },
+  {
+    update_id: 602082919,
+    message: {
+      message_id: 58061,
+      from: [Object],
+      chat: [Object],
+      date: 1661706369,
+      text: '/process',
+      entities: [Array]
+    }
+  }
+]
+PS E:\Project\bot-tele-ntdm> node rset.js
+PS E:\Project\bot-tele-ntdm> npm start 
+
+> faye_bot@1.0.2 start
+> node main.js
+
+Server is running...
+E:\Project\bot-tele-ntdm\node_modules\telegraf\lib\core\network\client.js:263
+            throw new error_1.default(data, { method, payload });
+                  ^
+
+TelegramError: 403: Forbidden: bot was blocked by the user
+    at Telegram.callApi (E:\Project\bot-tele-ntdm\node_modules\telegraf\lib\core\network\client.js:263:19)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async E:\Project\bot-tele-ntdm\main.js:197:19
+    at async execute (E:\Project\bot-tele-ntdm\node_modules\telegraf\lib\composer.js:458:17)
+    at async E:\Project\bot-tele-ntdm\node_modules\telegraf\lib\composer.js:459:21
+    at async E:\Project\bot-tele-ntdm\node_modules\telegraf\lib\composer.js:459:21
+    at async execute (E:\Project\bot-tele-ntdm\node_modules\telegraf\lib\composer.js:458:17)
+    at async E:\Project\bot-tele-ntdm\node_modules\telegraf\lib\composer.js:459:21
+    error_code: 403,
+    description: 'Forbidden: bot was blocked by the user'
+  },
+  on: {
+    method: 'sendMessage',
+    payload: { chat_id: 1967957355, text: 'Đang tìm kiếm' }
+  }
+}
+PS E:\Project\bot-tele-ntdm> npm start
+^C
+PS E:\Project\bot-tele-ntdm> ^C
+PS E:\Project\bot-tele-ntdm> node rset.js
+PS E:\Project\bot-tele-ntdm> node rset.js
+PS E:\Project\bot-tele-ntdm> npm start
+
+> faye_bot@1.0.2 start
+> node main.js
+
+Server is running...
+Stopping...
+Close http server
+Stop 0 cron jobs
+Terminate batch job (Y/N)? n
+PS E:\Project\bot-tele-ntdm> node saveupdate.js
+[
+  {
+    update_id: 602084475,
+    message: {
+      message_id: 60426,
+      from: [Object],
+      chat: [Object],
+      date: 1661736391,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602084476,
+    message: {
+      message_id: 60427,
+      from: [Object],
+      chat: [Object],
+      date: 1661736397,
+      text: '/keywarp',
+      entities: [Array]
+    }
+  },
+  {
+    update_id: 602084477,
+    message: {
+      message_id: 60428,
+      from: [Object],
+      chat: [Object],
+      date: 1661736427,
+      text: '/info',
+    }
+  },
+  {
+    update_id: 602084478,
+    message: {
+      message_id: 60429,
+      from: [Object],
+      chat: [Object],
+      date: 1661736446,
+      text: '/help',
+      entities: [Array]
+    }
+  }
+]
+PS E:\Project\bot-tele-ntdm> node main.js
+Server is running...
+Stopping...
+Close http server
+Stop 0 cron jobs
+PS E:\Project\bot-tele-ntdm> https://api.quoctrieudev.com/v1.1/cfwarp/key?nttoken=ffffffff&pretty=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1502 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS E:\Project\bot-tele-ntdm> node send_message.js
+number:  27
+id: 1153910437 {
+  status: 200,
+  statusText: 'OK',
+  headers: {
+    server: 'openresty',
+    date: 'Mon, 29 Aug 2022 01:42:37 GMT',
+    'content-type': 'application/json',
+    'content-length': '2',
+    connection: 'close',
+    'access-control-allow-origin': '*',
+    'access-control-allow-methods': 'OPTIONS,GET,POST,PUT,DELETE',
+    'access-control-max-age': '3600',
+    'access-control-allow-headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
+  },
+  config: {
+    url: '/cfwarp/key/list?pretty=1&cond=["telegram_id_owner","=","{$}"]&cols=*',
+    method: 'get',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      'User-Agent': 'axios/0.21.4'
+    },
+    params: { nttoken: 'ffffffff' },
+    baseURL: 'http://api.quoctrieudev.com/v1.1',
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 0,
+    adapter: [Function: httpAdapter],
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    validateStatus: [Function: validateStatus],
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    data: undefined
+  },
+  request: <ref *1> ClientRequest {
+    _events: [Object: null prototype] {
+      abort: [Function (anonymous)],
+      aborted: [Function (anonymous)],
+      connect: [Function (anonymous)],
+      error: [Function (anonymous)],
+      socket: [Function (anonymous)],
+      timeout: [Function (anonymous)],
+      prefinish: [Function: requestOnPrefinish]
+    },
+    _eventsCount: 7,
+    _maxListeners: undefined,
+    outputData: [],
+    outputSize: 0,
+    writable: true,
+    destroyed: false,
+    _last: true,
+    chunkedEncoding: false,
+    shouldKeepAlive: false,
+    maxRequestsOnConnectionReached: false,
+    _defaultKeepAlive: true,
+    useChunkedEncodingByDefault: false,
+    sendDate: false,
+    _removedConnection: false,
+    _removedContLen: false,
+    _removedTE: false,
+    _contentLength: 0,
+    _hasBody: true,
+    _trailer: '',
+    finished: true,
+    _headerSent: true,
+    _closed: false,
+    socket: Socket {
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'api.quoctrieudev.com',
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: null,
+      _server: null,
+      parser: null,
+      _httpMessage: [Circular *1],
+      [Symbol(async_id_symbol)]: 8,
+      [Symbol(kHandle)]: [TCP],
+      [Symbol(kSetNoDelay)]: false,
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: null,
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesRead)]: 0,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    _header: 'GET /v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff HTTP/1.1\r\n' +
+      'Accept: application/json, text/plain, */*\r\n' +
+      'Content-Type: application/json;charset=UTF-8\r\n' +
+      'Access-Control-Allow-Origin: *\r\n' +
+      'User-Agent: axios/0.21.4\r\n' +
+      'Host: api.quoctrieudev.com\r\n' +
+      'Connection: close\r\n' +
+      '\r\n',
+    _keepAliveTimeout: 0,
+    _onPendingData: [Function: nop],
+    agent: Agent {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      defaultPort: 80,
+      protocol: 'http:',
+      options: [Object: null prototype],
+      requests: [Object: null prototype] {},
+      sockets: [Object: null prototype],
+      freeSockets: [Object: null prototype] {},
+      keepAliveMsecs: 1000,
+      keepAlive: false,
+      maxSockets: Infinity,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      maxTotalSockets: Infinity,
+      totalSocketCount: 1,
+      [Symbol(kCapture)]: false
+    },
+    socketPath: undefined,
+    method: 'GET',
+    maxHeaderSize: undefined,
+    insecureHTTPParser: undefined,
+    path: '/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff',
+    _ended: true,
+    res: IncomingMessage {
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 3,
+      _maxListeners: undefined,
+      socket: [Socket],
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: true,
+      rawHeaders: [Array],
+      rawTrailers: [],
+      aborted: false,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 200,
+      statusMessage: 'OK',
+      client: [Socket],
+      _consuming: false,
+      _dumped: false,
+      req: [Circular *1],
+      responseUrl: 'http://api.quoctrieudev.com/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff',
+      redirects: [],
+      [Symbol(kCapture)]: false,
+      [Symbol(kHeaders)]: [Object],
+      [Symbol(kHeadersCount)]: 18,
+      [Symbol(kTrailers)]: null,
+      [Symbol(kTrailersCount)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    aborted: false,
+    timeoutCb: null,
+    upgradeOrConnect: false,
+    parser: null,
+    maxHeadersCount: null,
+    reusedSocket: false,
+    host: 'api.quoctrieudev.com',
+    protocol: 'http:',
+    _redirectable: Writable {
+      _writableState: [WritableState],
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      _options: [Object],
+      _ended: true,
+      _ending: true,
+      _redirectCount: 0,
+      _redirects: [],
+      _requestBodyLength: 0,
+      _requestBodyBuffers: [],
+      _onNativeResponse: [Function (anonymous)],
+      _currentRequest: [Circular *1],
+      _currentUrl: 'http://api.quoctrieudev.com/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff',
+      [Symbol(kCapture)]: false
+    },
+    [Symbol(kCapture)]: false,
+    [Symbol(kNeedDrain)]: false,
+    [Symbol(corked)]: 0,
+    [Symbol(kOutHeaders)]: [Object: null prototype] {
+      accept: [Array],
+      'content-type': [Array],
+      'access-control-allow-origin': [Array],
+      'user-agent': [Array],
+      host: [Array]
+    }
+  },
+  data: []
+}
+id: 1305449961 {
+  status: 200,
+  statusText: 'OK',
+  headers: {
+    server: 'openresty',
+    date: 'Mon, 29 Aug 2022 01:42:42 GMT',
+    'content-type': 'application/json',
+    'content-length': '2',
+    connection: 'close',
+    'access-control-allow-origin': '*',
+    'access-control-allow-methods': 'OPTIONS,GET,POST,PUT,DELETE',
+    'access-control-max-age': '3600',
+    'access-control-allow-headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
+  },
+  config: {
+    url: '/cfwarp/key/list?pretty=1&cond=["telegram_id_owner","=","{$}"]&cols=*',
+    method: 'get',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      'User-Agent': 'axios/0.21.4'
+    },
+    params: { nttoken: 'ffffffff' },
+    baseURL: 'http://api.quoctrieudev.com/v1.1',
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 0,
+    adapter: [Function: httpAdapter],
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    validateStatus: [Function: validateStatus],
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    data: undefined
+  },
+  request: <ref *1> ClientRequest {
+    _events: [Object: null prototype] {
+      abort: [Function (anonymous)],
+      aborted: [Function (anonymous)],
+      connect: [Function (anonymous)],
+      error: [Function (anonymous)],
+      socket: [Function (anonymous)],
+      timeout: [Function (anonymous)],
+      prefinish: [Function: requestOnPrefinish]
+    },
+    _eventsCount: 7,
+    _maxListeners: undefined,
+    outputData: [],
+    outputSize: 0,
+    writable: true,
+    destroyed: false,
+    _last: true,
+    chunkedEncoding: false,
+    shouldKeepAlive: false,
+    maxRequestsOnConnectionReached: false,
+    _defaultKeepAlive: true,
+    useChunkedEncodingByDefault: false,
+    sendDate: false,
+    _removedConnection: false,
+    _removedContLen: false,
+    _removedTE: false,
+    _contentLength: 0,
+    _hasBody: true,
+    _trailer: '',
+    finished: true,
+    _headerSent: true,
+    _closed: false,
+    socket: Socket {
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'api.quoctrieudev.com',
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: null,
+      _server: null,
+      parser: null,
+      _httpMessage: [Circular *1],
+      [Symbol(async_id_symbol)]: 28,
+      [Symbol(kHandle)]: [TCP],
+      [Symbol(kSetNoDelay)]: false,
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: null,
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesRead)]: 0,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    _header: 'GET /v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff HTTP/1.1\r\n' +
+      'Accept: application/json, text/plain, */*\r\n' +
+      'Content-Type: application/json;charset=UTF-8\r\n' +
+      'Access-Control-Allow-Origin: *\r\n' +
+      'User-Agent: axios/0.21.4\r\n' +
+      'Host: api.quoctrieudev.com\r\n' +
+      'Connection: close\r\n' +
+      '\r\n',
+    _keepAliveTimeout: 0,
+    _onPendingData: [Function: nop],
+    agent: Agent {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      defaultPort: 80,
+      protocol: 'http:',
+      options: [Object: null prototype],
+      requests: [Object: null prototype] {},
+      sockets: [Object: null prototype],
+      freeSockets: [Object: null prototype] {},
+      keepAliveMsecs: 1000,
+      keepAlive: false,
+      maxSockets: Infinity,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      maxTotalSockets: Infinity,
+      totalSocketCount: 1,
+      [Symbol(kCapture)]: false
+    },
+    socketPath: undefined,
+    method: 'GET',
+    maxHeaderSize: undefined,
+    insecureHTTPParser: undefined,
+    path: '/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff',
+    _ended: true,
+    res: IncomingMessage {
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 3,
+      _maxListeners: undefined,
+      socket: [Socket],
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: true,
+      rawHeaders: [Array],
+      rawTrailers: [],
+      aborted: false,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 200,
+      statusMessage: 'OK',
+      client: [Socket],
+      _consuming: false,
+      _dumped: false,
+      req: [Circular *1],
+      responseUrl: 'http://api.quoctrieudev.com/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff',
+      redirects: [],
+      [Symbol(kCapture)]: false,
+      [Symbol(kHeaders)]: [Object],
+      [Symbol(kHeadersCount)]: 18,
+      [Symbol(kTrailers)]: null,
+      [Symbol(kTrailersCount)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    aborted: false,
+    timeoutCb: null,
+    upgradeOrConnect: false,
+    parser: null,
+    maxHeadersCount: null,
+    reusedSocket: false,
+    host: 'api.quoctrieudev.com',
+    protocol: 'http:',
+    _redirectable: Writable {
+      _writableState: [WritableState],
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      _options: [Object],
+      _ended: true,
+      _ending: true,
+      _redirectCount: 0,
+      _redirects: [],
+      _requestBodyLength: 0,
+      _requestBodyBuffers: [],
+      _onNativeResponse: [Function (anonymous)],
+      _currentRequest: [Circular *1],
+      _currentUrl: 'http://api.quoctrieudev.com/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff',
+      [Symbol(kCapture)]: false
+    },
+    [Symbol(kCapture)]: false,
+    [Symbol(kNeedDrain)]: false,
+    [Symbol(corked)]: 0,
+    [Symbol(kOutHeaders)]: [Object: null prototype] {
+      accept: [Array],
+      'content-type': [Array],
+      'access-control-allow-origin': [Array],
+      'user-agent': [Array],
+      host: [Array]
+    }
+  },
+  data: []
+}
+id: 5025260440 {
+  status: 200,
+  statusText: 'OK',
+  headers: {
+    server: 'openresty',
+    date: 'Mon, 29 Aug 2022 01:42:48 GMT',
+    'content-type': 'application/json',
+    'content-length': '2',
+    connection: 'close',
+    'access-control-allow-origin': '*',
+    'access-control-allow-methods': 'OPTIONS,GET,POST,PUT,DELETE',
+    'access-control-max-age': '3600',
+    'access-control-allow-headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
+  },
+  config: {
+    url: '/cfwarp/key/list?pretty=1&cond=["telegram_id_owner","=","{$}"]&cols=*',
+    method: 'get',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      'User-Agent': 'axios/0.21.4'
+    },
+    params: { nttoken: 'ffffffff' },
+    baseURL: 'http://api.quoctrieudev.com/v1.1',
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 0,
+    adapter: [Function: httpAdapter],
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    validateStatus: [Function: validateStatus],
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    data: undefined
+  },
+  request: <ref *1> ClientRequest {
+    _events: [Object: null prototype] {
+      abort: [Function (anonymous)],
+      aborted: [Function (anonymous)],
+      connect: [Function (anonymous)],
+      error: [Function (anonymous)],
+      socket: [Function (anonymous)],
+      timeout: [Function (anonymous)],
+      prefinish: [Function: requestOnPrefinish]
+    },
+    _eventsCount: 7,
+    _maxListeners: undefined,
+    outputData: [],
+    outputSize: 0,
+    writable: true,
+    destroyed: false,
+    _last: true,
+    chunkedEncoding: false,
+    shouldKeepAlive: false,
+    maxRequestsOnConnectionReached: false,
+    _defaultKeepAlive: true,
+    useChunkedEncodingByDefault: false,
+    sendDate: false,
+    _removedConnection: false,
+    _removedContLen: false,
+    _removedTE: false,
+    _contentLength: 0,
+    _hasBody: true,
+    _trailer: '',
+    finished: true,
+    _headerSent: true,
+    _closed: false,
+    socket: Socket {
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'api.quoctrieudev.com',
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: null,
+      _server: null,
+      parser: null,
+      _httpMessage: [Circular *1],
+      [Symbol(async_id_symbol)]: 47,
+      [Symbol(kHandle)]: [TCP],
+      [Symbol(kSetNoDelay)]: false,
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: null,
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesRead)]: 0,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    _header: 'GET /v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff HTTP/1.1\r\n' +
+      'Accept: application/json, text/plain, */*\r\n' +
+      'Content-Type: application/json;charset=UTF-8\r\n' +
+      'Access-Control-Allow-Origin: *\r\n' +
+      'User-Agent: axios/0.21.4\r\n' +
+      'Host: api.quoctrieudev.com\r\n' +
+      'Connection: close\r\n' +
+      '\r\n',
+    _keepAliveTimeout: 0,
+    _onPendingData: [Function: nop],
+    agent: Agent {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      defaultPort: 80,
+      protocol: 'http:',
+      options: [Object: null prototype],
+      requests: [Object: null prototype] {},
+      sockets: [Object: null prototype],
+      freeSockets: [Object: null prototype] {},
+      keepAliveMsecs: 1000,
+      keepAlive: false,
+      maxSockets: Infinity,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      maxTotalSockets: Infinity,
+      totalSocketCount: 1,
+      [Symbol(kCapture)]: false
+    },
+    socketPath: undefined,
+    method: 'GET',
+    maxHeaderSize: undefined,
+    insecureHTTPParser: undefined,
+    path: '/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff',
+    _ended: true,
+    res: IncomingMessage {
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 3,
+      _maxListeners: undefined,
+      socket: [Socket],
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: true,
+      rawHeaders: [Array],
+      rawTrailers: [],
+      aborted: false,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 200,
+      statusMessage: 'OK',
+      client: [Socket],
+      _consuming: false,
+      _dumped: false,
+      req: [Circular *1],
+      responseUrl: 'http://api.quoctrieudev.com/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff',
+      redirects: [],
+      [Symbol(kCapture)]: false,
+      [Symbol(kHeaders)]: [Object],
+      [Symbol(kHeadersCount)]: 18,
+      [Symbol(kTrailers)]: null,
+      [Symbol(kTrailersCount)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    aborted: false,
+    timeoutCb: null,
+    upgradeOrConnect: false,
+    parser: null,
+    maxHeadersCount: null,
+    reusedSocket: false,
+    host: 'api.quoctrieudev.com',
+    protocol: 'http:',
+    _redirectable: Writable {
+      _writableState: [WritableState],
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      _options: [Object],
+      _ended: true,
+      _ending: true,
+      _redirectCount: 0,
+      _redirects: [],
+      _requestBodyLength: 0,
+      _requestBodyBuffers: [],
+      _onNativeResponse: [Function (anonymous)],
+      _currentRequest: [Circular *1],
+      _currentUrl: 'http://api.quoctrieudev.com/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%22%7B$%7D%22]&cols=*&nttoken=ffffffff',
+      [Symbol(kCapture)]: false
+    },
+    [Symbol(kCapture)]: false,
+    [Symbol(kNeedDrain)]: false,
+    [Symbol(corked)]: 0,
+    [Symbol(kOutHeaders)]: [Object: null prototype] {
+      accept: [Array],
+      'content-type': [Array],
+      'access-control-allow-origin': [Array],
+      'user-agent': [Array],
+      host: [Array]
+    }
+  },
+  data: []
+}
+PS E:\Project\bot-tele-ntdm> node send_message.js
+number:  27
+id: 1153910437 {
+  status: 200,
+  statusText: 'OK',
+  headers: {
+    server: 'openresty',
+    date: 'Mon, 29 Aug 2022 01:43:42 GMT',
+    'content-type': 'application/json',
+    'content-length': '2',
+    connection: 'close',
+    'access-control-allow-origin': '*',
+    'access-control-allow-methods': 'OPTIONS,GET,POST,PUT,DELETE',
+    'access-control-max-age': '3600',
+    'access-control-allow-headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
+  },
+  config: {
+    url: '/cfwarp/key/list?pretty=1&cond=["telegram_id_owner","=","1153910437"]&cols=*',
+    method: 'get',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      'User-Agent': 'axios/0.21.4'
+    },
+    params: { nttoken: 'ffffffff' },
+    baseURL: 'http://api.quoctrieudev.com/v1.1',
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 0,
+    adapter: [Function: httpAdapter],
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    validateStatus: [Function: validateStatus],
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    data: undefined
+  },
+  request: <ref *1> ClientRequest {
+    _events: [Object: null prototype] {
+      abort: [Function (anonymous)],
+      aborted: [Function (anonymous)],
+      connect: [Function (anonymous)],
+      error: [Function (anonymous)],
+      socket: [Function (anonymous)],
+      timeout: [Function (anonymous)],
+      prefinish: [Function: requestOnPrefinish]
+    },
+    _eventsCount: 7,
+    _maxListeners: undefined,
+    outputData: [],
+    outputSize: 0,
+    writable: true,
+    destroyed: false,
+    _last: true,
+    chunkedEncoding: false,
+    shouldKeepAlive: false,
+    maxRequestsOnConnectionReached: false,
+    _defaultKeepAlive: true,
+    useChunkedEncodingByDefault: false,
+    sendDate: false,
+    _removedConnection: false,
+    _removedContLen: false,
+    _removedTE: false,
+    _contentLength: 0,
+    _hasBody: true,
+    _trailer: '',
+    finished: true,
+    _headerSent: true,
+    _closed: false,
+    socket: Socket {
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'api.quoctrieudev.com',
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: null,
+      _server: null,
+      parser: null,
+      _httpMessage: [Circular *1],
+      [Symbol(async_id_symbol)]: 8,
+      [Symbol(kHandle)]: [TCP],
+      [Symbol(kSetNoDelay)]: false,
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: null,
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesRead)]: 0,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    _header: 'GET /v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%221153910437%22]&cols=*&nttoken=ffffffff HTTP/1.1\r\n' +
+      'Accept: application/json, text/plain, */*\r\n' +
+      'Content-Type: application/json;charset=UTF-8\r\n' +
+      'Access-Control-Allow-Origin: *\r\n' +
+      'User-Agent: axios/0.21.4\r\n' +
+      'Host: api.quoctrieudev.com\r\n' +
+      'Connection: close\r\n' +
+      '\r\n',
+    _keepAliveTimeout: 0,
+    _onPendingData: [Function: nop],
+    agent: Agent {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      defaultPort: 80,
+      protocol: 'http:',
+      options: [Object: null prototype],
+      requests: [Object: null prototype] {},
+      sockets: [Object: null prototype],
+      freeSockets: [Object: null prototype] {},
+      keepAliveMsecs: 1000,
+      keepAlive: false,
+      maxSockets: Infinity,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      maxTotalSockets: Infinity,
+      totalSocketCount: 1,
+      [Symbol(kCapture)]: false
+    },
+    socketPath: undefined,
+    method: 'GET',
+    maxHeaderSize: undefined,
+    insecureHTTPParser: undefined,
+    path: '/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%221153910437%22]&cols=*&nttoken=ffffffff',
+    _ended: true,
+    res: IncomingMessage {
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 3,
+      _maxListeners: undefined,
+      socket: [Socket],
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: true,
+      rawHeaders: [Array],
+      rawTrailers: [],
+      aborted: false,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 200,
+      statusMessage: 'OK',
+      client: [Socket],
+      _consuming: false,
+      _dumped: false,
+      req: [Circular *1],
+      responseUrl: 'http://api.quoctrieudev.com/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%221153910437%22]&cols=*&nttoken=ffffffff',
+      redirects: [],
+      [Symbol(kCapture)]: false,
+      [Symbol(kHeaders)]: [Object],
+      [Symbol(kHeadersCount)]: 18,
+      [Symbol(kTrailers)]: null,
+      [Symbol(kTrailersCount)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    aborted: false,
+    timeoutCb: null,
+    upgradeOrConnect: false,
+    parser: null,
+    maxHeadersCount: null,
+    reusedSocket: false,
+    host: 'api.quoctrieudev.com',
+    protocol: 'http:',
+    _redirectable: Writable {
+      _writableState: [WritableState],
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _options: [Object],
+      _ended: true,
+      _ending: true,
+      _redirectCount: 0,
+      _redirects: [],
+      _requestBodyLength: 0,
+      _requestBodyBuffers: [],
+      _onNativeResponse: [Function (anonymous)],
+      _currentRequest: [Circular *1],
+      _currentUrl: 'http://api.quoctrieudev.com/v1.1/cfwarp/key/list?pretty=1&cond=[%22telegram_id_owner%22,%22=%22,%221153910437%22]&cols=*&nttoken=ffffffff',
+      [Symbol(kCapture)]: false
+    },
+    [Symbol(kCapture)]: false,
+    [Symbol(kNeedDrain)]: false,
+    [Symbol(corked)]: 0,
+    [Symbol(kOutHeaders)]: [Object: null prototype] {
+      accept: [Array],
+      'content-type': [Array],
+      'access-control-allow-origin': [Array],
+      'user-agent': [Array],
+      host: [Array]
+    }
+  },
+  data: []
+}
+PS E:\Project\bot-tele-ntdm> node send_message.js
+number:  27
+id: 1153910437 []
+E:\Project\bot-tele-ntdm\node_modules\telegraf\lib\core\network\client.js:263
+            throw new error_1.default(data, { method, payload });
+                  ^
+
+TelegramError: 400: Bad Request: chat not found
+    at Telegram.callApi (E:\Project\bot-tele-ntdm\node_modules\telegraf\lib\core\network\client.js:263:19)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async main (E:\Project\bot-tele-ntdm\send_message.js:85:20) {
+    ok: false,
+    error_code: 400,
+    description: 'Bad Request: chat not found'
+  },
+  on: {
+    method: 'sendMessage',
+    payload: {
+      chat_id: 1153910437,
+      text: '[Thông báo]\n' +
+        'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh keywarp để nhận key nha.\n' +
+        'Cám ơn và chúc bạn một ngày tốt lành.'
+    }
+  }
+}
+PS E:\Project\bot-tele-ntdm> node send_message.js
+number:  27
+id: 1153910437 []
+{
+  message_id: 60673,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1153910437,
+    first_name: 'Duckyducky',
+    username: 'duckcandy',
+    type: 'private'
+  },
+  date: 1661737586,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 1305449961 []
+{
+  message_id: 60679,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1305449961,
+    first_name: 'Tien',
+    last_name: 'Le',
+    type: 'private'
+  },
+  date: 1661737592,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 5025260440 []
+{
+  message_id: 60680,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 5025260440,
+    first_name: '813967 - Nguyễn Thị Ngọc Huyền - Hưng Yên',
+    type: 'private'
+  },
+  date: 1661737597,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 1235200013 []
+{
+  message_id: 60684,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1235200013,
+    first_name: 'phuc',
+    last_name: 'nguyen',
+    type: 'private'
+  },
+  date: 1661737603,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 1042320705 []
+{
+  message_id: 60686,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1042320705,
+    first_name: 'Tom',
+    last_name: 'Ten',
+    type: 'private'
+  },
+  date: 1661737608,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 5151946565 []
+{
+  message_id: 60692,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: { id: 5151946565, first_name: 'K', last_name: 'C', type: 'private' },
+  date: 1661737614,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 2033767153 []
+{
+  message_id: 60698,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 2033767153,
+    first_name: 'Tấn',
+    last_name: 'Hùng',
+    type: 'private'
+  },
+  date: 1661737619,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 1267608174 []
+{
+  message_id: 60699,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1267608174,
+    first_name: 'Thang',
+    last_name: 'Lam',
+    type: 'private'
+  },
+  date: 1661737625,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 1310610292 []
+{
+  message_id: 60703,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1310610292,
+    first_name: 'PTD',
+    last_name: '189',
+    username: 'ptd189',
+    type: 'private'
+  },
+  date: 1661737630,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 949612773 []
+{
+  message_id: 60709,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 949612773,
+    first_name: 'Nguyen',
+    last_name: 'Pham',
+    username: 'iamnewnguyen',
+    type: 'private'
+  },
+  date: 1661737636,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 816532322 []
+{
+  message_id: 60710,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 816532322,
+    first_name: 'Cuong',
+    last_name: 'Ngo',
+    type: 'private'
+  },
+  date: 1661737642,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 2066890391 []
+{
+  message_id: 60718,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 2066890391,
+    first_name: 'Bing',
+    last_name: 'Bonk',
+    type: 'private'
+  },
+  date: 1661737647,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+id: 2011464477 []
+{
+  message_id: 60725,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 2011464477,
+    first_name: 'Sammah',
+    last_name: 'Alimentary',
+    username: 'datplantezt',
+  },
+  date: 1661737653,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+PS E:\Project\bot-tele-ntdm> node send_message.js
+number:  14
+id: 1266668899 []
+{
+  message_id: 60832,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1455276034,
+    first_name: 'Trieu',
+    username: 'QuocTrieuDev',
+    type: 'private'
+  },
+  date: 1661738074,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh \\keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [ { offset: 21, length: 7, type: 'url' } ]
+}
+PS E:\Project\bot-tele-ntdm> node send_message.js
+number:  14
+id: 1266668899 []
+{
+  message_id: 60879,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1266668899,
+    first_name: 'Justin',
+    last_name: 'Biahoi',
+    type: 'private'
+  },
+  date: 1661738275,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 1039517386 []
+{
+  message_id: 60880,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1039517386,
+    first_name: 'Vũ',
+    last_name: 'Linh',
+    username: 'vulinhcdn',
+    type: 'private'
+  },
+  date: 1661738281,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 5748091270 [
+  {
+    id: '2919',
+    cfwarp_id: '9a0dad24-eb13-4e0a-94b1-a1d4021eecb5',
+    license_key: 'F08v1PO2-7N80my9s-1m32UJs8',
+    token: 'f1c6848b-f6c7-4575-81ab-d14b95768870',
+    type: '3',
+    date_create: '2022-08-08 12:51:06',
+    date_update: '2022-08-29 08:35:08',
+    extra: '{"account_id": "a62ae8ef-1813-4873-9e0e-0b832f711140"}',
+    telegram_id_owner: '5748091270'
+  }
+]
+id: 1328970106 []
+{
+  message_id: 60887,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1328970106,
+    first_name: 'Thuan',
+    last_name: 'Truong Quoc',
+    username: 'qthuan382',
+    type: 'private'
+  },
+  date: 1661738292,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 1911827657 []
+{
+  message_id: 60888,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1911827657,
+    first_name: 'Ngô',
+    last_name: 'Sơn',
+    username: 'sonnt285',
+    type: 'private'
+  },
+  date: 1661738297,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 1345463714 []
+{
+  message_id: 60889,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: { id: 1345463714, first_name: 'Leon', type: 'private' },
+  date: 1661738303,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 1455857108 []
+{
+  message_id: 60893,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1455857108,
+    first_name: 'Nguyen',
+    last_name: 'Thanh Vu',
+    username: 'ntvu19',
+    type: 'private'
+  },
+  date: 1661738308,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 838311608 []
+{
+  message_id: 60897,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 838311608,
+    first_name: 'Khoa',
+    last_name: 'Le',
+    username: 'lkhoaa',
+    type: 'private'
+  },
+  date: 1661738314,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 867182637 []
+{
+  message_id: 60901,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 867182637,
+    first_name: 'Tan',
+    last_name: 'Trieu',
+    username: 'tantrieu',
+    type: 'private'
+  },
+  date: 1661738320,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 1865286847 []
+{
+  message_id: 60902,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1865286847,
+    first_name: 'SmiTh',
+    username: 'SmiTh2286',
+    type: 'private'
+  },
+  date: 1661738326,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 1234544065 [
+  {
+    id: '2916',
+    cfwarp_id: '77273f6a-f6b1-4407-8e57-a9efaa4ed7e3',
+    license_key: 'U7oz83h6-68F3rM1g-m71ob35j',
+    token: '3ceeceed-e76c-4be1-8f0c-305cde327861',
+    type: '3',
+    date_create: '2022-08-08 12:49:42',
+    date_update: '2022-08-29 08:34:17',
+    extra: '{"account_id": "c2642123-377d-4750-9b68-df452ab644d4"}',
+    telegram_id_owner: '1234544065'
+  }
+]
+id: 539433289 []
+{
+  message_id: 60903,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 539433289,
+    first_name: 'Happy',
+    last_name: 'Funny',
+    username: 'HappyFunny420',
+    type: 'private'
+  },
+  date: 1661738336,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 1493772765 []
+{
+  message_id: 60904,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 1493772765,
+    first_name: 'Nnnn',
+    last_name: 'nnn',
+    type: 'private'
+  },
+  date: 1661738342,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+id: 5135220484 []
+{
+  message_id: 60905,
+  from: {
+    id: 1921157192,
+    is_bot: true,
+    first_name: 'Faye Bot',
+    username: 'FayeDark_bot'
+  },
+  chat: {
+    id: 5135220484,
+    first_name: 'Hoat',
+    last_name: 'Phan',
+    type: 'private'
+  },
+  date: 1661738348,
+  text: '[Thông báo]\n' +
+    'Hiện key 1.1.1.1 đã có trở lại, Bạn hãy sử dụng lệnh /keywarp để nhận key nha.\n' +
+    'Cám ơn và chúc bạn một ngày tốt lành.',
+  entities: [
+    { offset: 21, length: 7, type: 'url' },
+    { offset: 65, length: 8, type: 'bot_command' }
+  ]
+}
+PS E:\Project\bot-tele-ntdm>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
