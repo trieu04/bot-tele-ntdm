@@ -1,0 +1,12 @@
+{
+    "hello": "Hello {{0}}",
+    "fail_load_module": "Fail load module: {{0}}",
+    "success_load_module": "Success load module: {{0}}",
+    "loaded_package": "Loaded package: {{0}}",
+    "can_not_install_package": "Can not install package: {{package}} Of module: {{name}}",
+    "not_found_package": "Not found package: {{name}}, module: {{module}}",
+    "failed_connect_database": "Failed connect Database:",
+    "using_command_instead": "[✨] Not found command <b>{{0}}</b>\nAuto using <b>{{1}}</b> instead!",
+    "not_found_command": "[✖] Not found command: <b>{{0}}</b>.",
+    "not_found_command_and_avaible": "[🔎] Not found command: <b>{{0}}</b>.\nAvaible: {{1}}."
+}

@@ -1,0 +1,85 @@
+{
+    "language": "en",
+    "keyActive": "",
+    "DeveloperMode": false,
+    "autoCreateDB": true,
+    "allowInbox": true,
+    "autoClean": false,
+    "commandDisabled": [],
+    "eventDisabled": [],
+    "BOTNAME": "Fayedev_bot",
+    "PREFIX": "/",
+    "ADMINSBOT": [
+        "1455276034",
+        "USERID2"
+    ],
+    "USERGROUPS": [
+        "admin",
+        "user",
+        "all"
+    ],
+    "DATABASE": {
+        "mysql": {
+            "storage": "bdgtnwth_bot-tele"
+        },
+        "sqlite": {
+            "storage": "./includes/database/db.sqlite"
+        }
+    },
+    "version": "1.2.14",
+    "modules": {
+        "example": {
+            "hidden": true
+        },
+        "checktt": {
+            "maxColumn": 10
+        },
+        "daily": {
+            "cooldownTime": 43200000,
+            "rewardCoin": 200
+        },
+        "help": {
+            "autoUnsend": true,
+            "delayUnsend": 10
+        },
+        "math": {
+            "WOLFRAM": "T8J8YV-H265UQ762K"
+        },
+        "rank": {
+            "APIKEY": "571752207151901|AC-zG86sv6U6kpnT0_snIHBOHJc"
+        },
+        "rankup": {
+            "autoUnsend": true,
+            "unsendMessageAfter": 5
+        },
+        "rname": {
+            "APIKEY": "mi451266190"
+        },
+        "sauce": {
+            "SAUCENAO_API": "61e802b1478f8e85198f28ed6ac2de6efe5d0a41"
+        },
+        "sing": {
+            "YOUTUBE_API": "AIzaSyB5s_EBcHVPKzQ0ZRTQuzQbH7F8OtvH27U"
+        },
+        "video": {
+            "YOUTUBE_API": "AIzaSyB5s_EBcHVPKzQ0ZRTQuzQbH7F8OtvH27U"
+        },
+        "weather": {
+            "OPEN_WEATHER": "081c82065cfee62cb7988ddf90914bdd"
+        },
+        "work": {
+            "cooldownTime": 1200000
+        },
+        "adminUpdate": {
+            "autoUnsend": true,
+            "sendNoti": true,
+            "timeToUnsend": 10
+        },
+        "test": {
+            "YOUTUBE_API": "AIzaSyB5s_EBcHVPKzQ0ZRTQuzQbH7F8OtvH27U"
+        },
+        "lmao": {
+            "YOUTUBE_API": "AIzaSyB5s_EBcHVPKzQ0ZRTQuzQbH7F8OtvH27U"
+        }
+    }
+}

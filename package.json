@@ -1,0 +1,34 @@
+{
+  "name": "faye_bot",
+  "version": "2.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "MODE=dev node main.js",
+    "start": "node main.js"
+  },
+  "keywords": [],
+  "author": "Trieu04",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "chalk": "^4.1.2",
+    "cron": "^1.8.2",
+    "dotenv": "^10.0.0",
+    "express": "^4.18.2",
+    "fs-extra": "^10.0.0",
+    "http": "0.0.1-security",
+    "loglevel": "^1.8.1",
+    "loglevel-plugin-prefix": "^0.8.4",
+    "micromustache": "^8.0.3",
+    "mysql2": "^3.3.0",
+    "node-cache": "^5.1.2",
+    "pidusage": "^3.0.0",
+    "progress-stream": "^2.0.0",
+    "request": "^2.88.2",
+    "sequelize": "^6.26.0",
+    "sqlite3": "^5.1.3",
+    "string-similarity": "^4.0.4",
+    "telegraf": "^4.4.2"
+  }
+}
