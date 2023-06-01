@@ -3,7 +3,7 @@ const config = {
 	version: "1.0",
 	hasPermssion: "all",
 	credits: "Trieu04",
-	description: "description",
+	description: "{{description}}",
 	category: "bot",
 	usage: "usage",
 	cooldowns: 0,
@@ -26,6 +26,7 @@ const { Telegraf } = require("telegraf")
 const bot = new Telegraf()
 const Text = require("../../includes/utils/text")
 const text = new Text(config.languages)
+const mk = require("../../includes/utils/makeup")
 
 function getCommandInfo(){
     const categorys = {}
@@ -36,14 +37,14 @@ function getCommandInfo(){
         if(x.config.hidden){
             continue
         }
-        const text = new Text(x.config.languages)
+        const _text = new Text(x.config.languages)
     
         const command_info = {
             name: x.config.name,
-            description: text.render(x.config.description),
+            description: _text.render(x.config.description),
             version: x.config.version,
             category: x.config.category,
-            usage: text.render(x.config.usage),
+            usage: _text.render(x.config.usage),
             hasPermssion: x.config.hasPermssion,
             
         }
@@ -67,13 +68,13 @@ const run = async function ({ ctx, command: {command_body} }) {
     const {categorys, list} = getCommandInfo()
     if(command_body == ""){
         let p = []
-        p.push("Sử dụng /help + [Tên lệnh] để nhận thông tin và hướng dẫn sử dụng lệnh đó, ví dụ: " + text.hCode("/help info") + "\n")
+        p.push("Sử dụng /help + [Tên lệnh] để nhận thông tin và hướng dẫn sử dụng lệnh đó, ví dụ: " + mk.code("/help info") + "\n")
         p.push("Sau đây là các lệnh bạn có thể thực hiện với Faye Bot")
         x = p.push("") -1
         
         
         for(let category of Object.keys(categorys)){
-            p[x] += text.hBold(text.render(category)) + "\n"
+            p[x] += mk.bold(category) + "\n"
             for(let i of categorys[category]){
                 if(["start"].includes(i.name)) continue;
     
@@ -104,18 +105,18 @@ const run = async function ({ ctx, command: {command_body} }) {
         let c = list.find(u => u.name == command_body)
         if(c){
             let p = []
-            p.push(text.hBold('Lệnh') + ' /' + c.name + '.')
+            p.push(mk.bold('Lệnh') + ' /' + c.name + '.')
             p.push('')
-            p.push(text.hItalic("Danh mục: ") + text.render(c.category))
-            p.push(text.hItalic("Phiên bản: ") + c.version)
-            p.push(text.hItalic("Phạm vi: ") + c.hasPermssion)
-            p.push(text.hItalic("Mô tả: ") + c.description)
+            p.push(mk.italic("Danh mục: ") + c.category)
+            p.push(mk.italic("Phiên bản: ") + c.version)
+            p.push(mk.italic("Phạm vi: ") + c.hasPermssion)
+            p.push(mk.italic("Mô tả: ") + c.description)
             p.push('')
-            p.push(text.hItalic("Cách sử dụng:"))
+            p.push(mk.italic("Cách sử dụng:"))
             if(c.usage){
                 p.push(c.usage)
             } else {
-                p.push(text.hItalic("(Chưa có mô tả cách sử dụng cho lệnh này)"))
+                p.push(mk.italic("(Chưa có mô tả cách sử dụng cho lệnh này)"))
             }
 
             reply_text = p.join("\n")

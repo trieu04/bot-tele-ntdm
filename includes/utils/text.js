@@ -1,4 +1,4 @@
-const { render } = require("micromustache")
+const mm = require("micromustache")
 
 class Text {
     constructor(langData){
@@ -27,20 +27,36 @@ class Text {
             !Array.isArray(varible) &&
             varible !== null
     }
-    render(id, bindData) {
+    get(id, bindData){
         if(typeof id != "string" && typeof id != "number") {
             return null
         }
         const langcode = this.langcode
         if(this.#isObject(this.langData[langcode]) && typeof this.langData[langcode][id] == "string"){
             if(bindData){
-                return render(this.langData[langcode][id], bindData)
+                return mm.render(this.langData[langcode][id], bindData)
             }
             else {
                 return this.langData[langcode][id];
             }
         } else {
-            return id.replace("_", " ")
+            return id.replaceAll("_", " ")
+        }
+    }
+    render(text, bindData = null){
+        if(typeof text != "string") {
+            return null
+        }
+        const langcode = this.langcode
+        if(this.#isObject(this.langData[langcode])){
+            if(bindData === null){
+                return mm.render(text, this.langData[langcode])
+            }
+            else {
+                return mm.render(text, bindData)
+            }
+        } else {
+            return id.replaceAll("_", " ")
         }
     }
     setLangcode(langcode){

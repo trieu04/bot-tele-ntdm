@@ -77,7 +77,7 @@ const run = async function ({ ctx, command: {command_body} }) {
 	}
 	
 	else if(["gettext"].includes(command_body.toLowerCase())){
-		var repl_text = "*Get Text* " + text.render("version") + " 1.1"
+		var repl_text = "*Get Text* " + text.get("version") + " 1.1"
 		ctx.reply(repl_text, {parse_mode: "Markdown"});		
 	}
 	else{	

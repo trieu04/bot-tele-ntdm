@@ -64,13 +64,13 @@ function requireModule(filename, reload = false) {
             command_module.config &&
             command_module.config.name &&
             command_module.config.category
-        )) { throw new Error(text.render('error_format')); }
+        )) { throw new Error(text.get('error_format')); }
 
         let name = command_module.config.name
         command_module.requirePath = path
 
         if (globalThis.bot.commands.has(name || '')) { 
-            throw new Error(text.render('name_exist'));
+            throw new Error(text.get('name_exist'));
         }
         
         if (command_module.config.dependencies && typeof command_module.config.dependencies == 'object') {
@@ -80,7 +80,7 @@ function requireModule(filename, reload = false) {
                     listbuiltinModules.includes(dependency) ||
                     globalThis.modules.dependencyList.includes(dependency)
                 )) {
-                    log.warn(text.render('not_found_package', {name: dependency, module: name}));
+                    log.warn(text.get('not_found_package', {name: dependency, module: name}));
                     let module_version = command_module.config.dependencies[dependency] == '*' || command_module.config.dependencies[dependency] == '' ? '' : '@' + command_module.config.dependencies[dependency]
                     let command = 'npm --save install ' + dependency + module_version;
                     log.info("run:", command)
@@ -93,7 +93,7 @@ function requireModule(filename, reload = false) {
 
                     } catch (e) {
                         log.error(e)
-                        throw text.render('can_not_install_package', {name, package: dependency})
+                        throw text.get('can_not_install_package', {name, package: dependency})
                     }
                 }
             }
@@ -109,7 +109,7 @@ function requireModule(filename, reload = false) {
             try {
                 command_module.onLoad()
             } catch (e) {
-                throw new Error(text.render('can_not_onload', {name, error:JSON.stringify(e)}))
+                throw new Error(text.get('can_not_onload', {name, error:JSON.stringify(e)}))
             };
         }
 
@@ -118,10 +118,10 @@ function requireModule(filename, reload = false) {
         }
 
         globalThis.bot.commands.set(name, command_module)
-        log.info(text.render(reload ? 'success_reload_module' : 'success_load_module', [name]));
+        log.info(text.get(reload ? 'success_reload_module' : 'success_load_module', [name]));
         return {name, success: true}
     } catch (error) {
-        log.error(text.render(reload ? 'fail_reload_module' : 'fail_load_module', [filename]));
+        log.error(text.get(reload ? 'fail_reload_module' : 'fail_load_module', [filename]));
         log.error(filename + ": " + error.message)
         return {name: filename, success: false}
     };

@@ -38,21 +38,21 @@ const run = async function ({ ctx, command: {command_body} }) {
 		if(command_body.indexOf(" ") == -1){
 			const x = loadModule(true, command_body)
 			if(x[0].success){
-				reply = text.render("success_reload_module", [x.name])
+				reply = text.get("success_reload_module", [x.name])
 			}
 			else {
-				reply = text.render("fail_reload_module", [x.name])
+				reply = text.get("fail_reload_module", [x.name])
 			}
 		}
 		else {
-			reply = text.render("syntax_error")
+			reply = text.get("syntax_error")
 		}
     }
     else {
         const x = loadModule(true, null)
 		reply = ""
 		x?.forEach(u => {
-			reply += text.render("success_reload_module", [u.name]) + "\n"
+			reply += text.get("success_reload_module", [u.name]) + "\n"
 		});
     }
     

@@ -44,12 +44,12 @@ async function startConnectDB(){
     try {
         await db.sequelize.authenticate()
         await db.sequelize.sync()
-        log.info(text.render('success_connect_database'))
+        log.info(text.get('success_connect_database'))
         globalThis.db = db
         globalThis.models = db.models   
         return true;
     } catch (error) {
-        log.error(text.render('failed_connect_database'))
+        log.error(text.get('failed_connect_database'))
         log.error(error)
         return false
     }
