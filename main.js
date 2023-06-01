@@ -56,11 +56,14 @@ async function startConnectDB(){
 async function startBot(){
     const handleMessage = require("./includes/handle/handleMessage")
     const createDatabase = require("./includes/middleware/createDatabase")
+    const saveSendedMessage = require("./includes/bot/applySaveMessage")
 
     const DEV_MODE = true
     const token = DEV_MODE ? process.env.BOT_DEV_TOKEN : process.env.BOT_TOKEN
-    const {Telegraf} = require("telegraf")
+    const {Telegraf, Telegram} = require("telegraf")
     const bot = new Telegraf(token);
+    saveSendedMessage(bot, Telegram)
+
     bot.use(createDatabase);
     bot.on("message", (ctx) => {
         handleMessage({ctx})
