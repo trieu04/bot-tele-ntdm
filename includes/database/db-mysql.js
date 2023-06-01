@@ -18,7 +18,7 @@ const sequelize = new Sequelize(env.MYSQLDB_DATABASE, env.MYSQLDB_USERNAME, env.
 		name: 'query',
 		max: 5
 	},
-	logging: console.log,
+	logging: false,
 	define: {
 		underscored: false,
 		freezeTableName: true,
@@ -31,12 +31,12 @@ const sequelize = new Sequelize(env.MYSQLDB_DATABASE, env.MYSQLDB_USERNAME, env.
 });
 
 
-const Users = require("./models/tg_users.model")({sequelize});
+const TUsers = require("./models/tg_users.model")({sequelize});
 const TGroups = require("./models/tg_groups.model")({sequelize});
-const ChatHistory = require("./models/chat_history.model")({sequelize});
+const MessageHistory = require("./models/message_history.model")({sequelize});
 
 module.exports = {
 	sequelize,
-	models: {Users, TGroups, ChatHistory}
+	models: {TUsers, TGroups, MessageHistory}
 }
 

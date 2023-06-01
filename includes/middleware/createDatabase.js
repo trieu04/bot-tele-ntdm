@@ -10,16 +10,12 @@ const createDatabase = async (ctx, next) => {
         let id = ctx.from.id;
         let data = users_cache.get(id)
         const models = globalThis.db.models
-        if(!data) {
-            data = await models.Users.findOne({ where: {tg_id: id} });
-            if(!data) {
-                let value = {
+            let user_data = await models.TUsers.findOne({ where: {tg_id: id} });
                     tg_id: id,
                     tg_name: "1" ,
                     extra_data: JSON.stringify(ctx.from),
                 }
-                await models.Users.create(value)
-                users_cache.set(id, value)
+                models.TUsers.create(value)
             }
             else {
                 users_cache.set(id, data.dataValues)

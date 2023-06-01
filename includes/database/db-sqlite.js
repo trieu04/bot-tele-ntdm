@@ -30,25 +30,22 @@ const sequelize = new Sequelize({
 			collate: 'utf8_general_ci'
 		},
 		timestamps: true
-	},
-	sync: {
-		force: false
 	}
 });
 
 
-const Users = require("./models/tg_users.model")({sequelize});
+const TUsers = require("./models/tg_users.model")({sequelize});
 const TGroups = require("./models/tg_groups.model")({sequelize});
-const ChatHistory = require("./models/chat_history.model")({sequelize});
+const MessageHistory = require("./models/message_history.model")({sequelize});
 
 
 module.exports = {
 	sequelize,
-	models: {Users, TGroups, ChatHistory},
+	models: {TUsers, TGroups, MessageHistory},
 	sync: async function(){
-		await Users.sync({ alter: true })
-		await TGroups.sync({ alter: true })
-		await ChatHistory.sync({ alter: true })
+		await TUsers.sync()
+		await TGroups.sync()
+		await MessageHistory.sync()
 	},
 	authenticate: sequelize.authenticate
 }

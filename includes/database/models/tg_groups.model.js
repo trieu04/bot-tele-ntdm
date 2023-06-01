@@ -1,6 +1,6 @@
 module.exports = function({ sequelize }) {
     const { DataTypes } = require("sequelize"); 
-	let TGroups = sequelize.define('tg_groups', {
+	const TGroups = sequelize.define('tg_groups', {
 		id: {
 			type: DataTypes.INTEGER,
 			primaryKey: true,
@@ -10,16 +10,16 @@ module.exports = function({ sequelize }) {
 			type: DataTypes.BIGINT,
 			unique: true
 		},
-		group_name: {
+		tg_name: {
 			type: DataTypes.STRING
 		},
-		flag_id: {
-			type: DataTypes.INTEGER
+		flag: {
+			type: DataTypes.STRING
 		},
-		config: {
+		config_json: {
 			type: DataTypes.STRING(2000)
 		},
-		extra_data: {
+		extra_data_json: {
 			type: DataTypes.STRING(2000)
 		}
 

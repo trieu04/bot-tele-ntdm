@@ -1,6 +1,6 @@
 module.exports = function({ sequelize }) {
     const { DataTypes } = require("sequelize"); 
-	let Users = sequelize.define('tg_users', {
+	const TUsers = sequelize.define('tg_users', {
 		id: {
 			type: DataTypes.INTEGER,
 			primaryKey: true,
@@ -16,13 +16,13 @@ module.exports = function({ sequelize }) {
 		group_id:{
 			type: DataTypes.INTEGER
 		},
-		flag_id: {
-			type: DataTypes.INTEGER
+		flag: {
+			type: DataTypes.STRING
 		},
-		config: {
+		config_json: {
 			type: DataTypes.STRING(2000)
 		},
-		extra_data: {
+		extra_data_json: {
 			type: DataTypes.STRING(2000)
 		},
 	}, {
@@ -30,5 +30,5 @@ module.exports = function({ sequelize }) {
         freezeTableName: true
     });
 
-	return Users;
+	return TUsers;
 }
