@@ -18,7 +18,8 @@ globalThis.caches = {
 
 /// logger
 require("./includes/main/logger")
-const log = require("loglevel").getLogger("MAIN")
+const logger = require("loglevel")
+const log = logger.getLogger("MAIN")
 
 /// Module load status
 globalThis.loadStatus = []
@@ -45,7 +46,7 @@ async function startConnectDB(){
         await db.sequelize.sync()
         log.info(text.render('success_connect_database'))
         globalThis.db = db
-        globalThis.models = db.models
+        globalThis.models = db.models   
         return true;
     } catch (error) {
         log.error(text.render('failed_connect_database'))
@@ -61,34 +62,26 @@ async function startBot(){
     const DEV_MODE = true
     const token = DEV_MODE ? process.env.BOT_DEV_TOKEN : process.env.BOT_TOKEN
     const {Telegraf, Telegram} = require("telegraf")
+
     const bot = new Telegraf(token);
     saveSendedMessage(bot, Telegram)
 
     bot.use(createDatabase);
-    bot.on("message", (ctx) => {
-        handleMessage({ctx})
+    bot.on("message", async (ctx) => {
+        return handleMessage({ctx})
     });
-    bot.launch()
-}
-async function startWeb(){
-    const express = require('express')
-    const app = express()
-    const port = 9001
 
-    app.get('/', (req, res) => {
-        res.send('Hello World!')
-    })
-
-    app.listen(port, () => {
-       log.info(`Example app listening on port ${port}: http://localhost:${port}`)
+    bot.launch().catch(err => {
+        log.error(err)
+        throw err
     })
 }
 
-async function startApp(){
+async function START(){
     if(!await startConnectDB()){
-        return;
+        exit(1)
     }
+ 
     await startBot()
-    await startWeb()
 }
-startApp()
+START()

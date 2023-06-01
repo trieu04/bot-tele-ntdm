@@ -38,7 +38,12 @@ var getLogFile = new CronJob(
             "-" + pad(dateTime.getDate())
     
         const logPath = path.join(mainPath, "log", `${date}.log`)
-        logFile = fs.createWriteStream(logPath, {flags : 'a'})
+        
+        const newLogFile = fs.createWriteStream(logPath, {flags : 'a'})
+        if(logFile instanceof fs.WriteStream){
+            logFile.end()
+        }
+        logFile = newLogFile
 	},
 	null,
 	true,
@@ -57,8 +62,7 @@ log.methodFactory = function (methodName, logLevel, loggerName) {
         var content = "" 
         var length = arguments.length;
         var args = Array(length);
-        var key = 0;
-        for (; key < length; key++) {
+        for (let key = 0; key < length; key++) {
             args[key] = arguments[key];
             if(typeof args[key] == "object")
                 content += JSON.stringify(args[key])
@@ -71,6 +75,16 @@ log.methodFactory = function (methodName, logLevel, loggerName) {
       };
 };
 
+function getDateTime(date, timezoneOffset = 420) {
+    date.setTime(date.getTime() + (date.getTimezoneOffset() + timezoneOffset) * 60 * 1000)
+    const pad = n => `${Math.floor(Math.abs(n))}`.padStart(2, '0');
+    return date.getFullYear() +
+      '-' + pad(date.getMonth() + 1) +
+      '-' + pad(date.getDate()) +
+      ' ' + pad(date.getHours()) +
+      ':' + pad(date.getMinutes()) +
+      ':' + pad(date.getSeconds())
+}
 prefix.reg(log);
 prefix.apply(log, {
     format(level, name, timestamp) {
@@ -87,15 +101,5 @@ prefix.apply(log, {
     }
 });
 
-function getDateTime(date, timezoneOffset = 420) {
-    date.setTime(date.getTime() + (date.getTimezoneOffset() + timezoneOffset) * 60 * 1000)
-    const pad = n => `${Math.floor(Math.abs(n))}`.padStart(2, '0');
-    return date.getFullYear() +
-      '-' + pad(date.getMonth() + 1) +
-      '-' + pad(date.getDate()) +
-      ' ' + pad(date.getHours()) +
-      ':' + pad(date.getMinutes()) +
-      ':' + pad(date.getSeconds())
-}
 
 log.getLogger("LOGGER").info("TIME OFFSET: UTC+07:00")

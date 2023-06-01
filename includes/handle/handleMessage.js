@@ -1,7 +1,8 @@
 const loglevel = require("loglevel")
 const log = loglevel.getLogger("MESSAGE")
 const handleCommand = require("./handleCommand")
-const handleMessage = function ({ctx}) {
+const handlePhoto = require("./handlePhoto")
+const handleMessage = async function ({ctx}) {
 
     
     // ctx.update == {
@@ -31,7 +32,7 @@ const handleMessage = function ({ctx}) {
         const message_text = ctx.update.message.text;
         // check command
         const prefix = "/"
-        const regex = new RegExp('^' + prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\S*')
+        const regex = new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\S*`)
         const match = message_text.match(regex)
         if (match !== null) { // is command
             const command_name = 
@@ -41,15 +42,15 @@ const handleMessage = function ({ctx}) {
 
             const command_body = 
                 message_text
-                .substring(match[0].length)
-                .trim()
-            
+                    .substring(match[0].length)
+                    .trim()
+
             const command = {command_name, command_body}
-            handleCommand({ctx, command})
+            return handleCommand({ctx, command})
         }
     }
     if(ctx.update.message.hasOwnProperty('photo')){
-        ctx.reply("bạn vừa gửi 1 ảnh")
+        return handlePhoto({ctx})
     }
     
 

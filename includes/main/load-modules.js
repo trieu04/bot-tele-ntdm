@@ -122,7 +122,7 @@ function requireModule(filename, reload = false) {
         return {name, success: true}
     } catch (error) {
         log.error(text.render(reload ? 'fail_reload_module' : 'fail_load_module', [filename]));
-        log.error(error)
+        log.error(filename + ": " + error.message)
         return {name: filename, success: false}
     };
 }

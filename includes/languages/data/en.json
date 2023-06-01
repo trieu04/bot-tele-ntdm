@@ -6,7 +6,10 @@
     "can_not_install_package": "Can not install package: {{package}} Of module: {{name}}",
     "not_found_package": "Not found package: {{name}}, module: {{module}}",
     "failed_connect_database": "Failed connect Database:",
-    "using_command_instead": "[✨] Not found command <b>{{0}}</b>\nAuto using <b>{{1}}</b> instead!",
-    "not_found_command": "[✖] Not found command: <b>{{0}}</b>.",
-    "not_found_command_and_avaible": "[🔎] Not found command: <b>{{0}}</b>.\nAvaible: {{1}}."
+    "using_command_instead": "[✨] Not found command {{0}}\nAuto using {{1}} instead!",
+    "not_found_command": "[✖] Not found command: {{0}}.",
+    "not_found_command_and_avaible": "[🔎] Not found command: {{0}}.\nAvaible: {{1}}.",
+    "the_command_is_disabled": "The command {{0}} is disabled",
+    "you_may_not_be_able_to_use_the_command": "You may not be able to use the command {{0}}",
+    "an_error_has_occurred": "{{0}}: An error has occurred!"
 }
