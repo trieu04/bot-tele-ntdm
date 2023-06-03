@@ -1,19 +1,26 @@
 const mm = require("micromustache")
 
+const isObject = (varible) => {
+    return typeof varible === 'object' &&
+        !Array.isArray(varible) &&
+        varible !== null
+}
+
 class Text {
     constructor(langData){
-        if(typeof langData == "object" && langData !== null){
-            var list_langcode = Object.keys(langData)
-            var defaultLangcode;
-            if(list_langcode.includes("en")){
-                defaultLangcode = "en"
+        const defaultLangcode = "en"
+        Text.prototype.set_langcode_prop = this.set_langcode_prop || defaultLangcode
+
+        if(isObject(langData) && Object.keys(langData).length > 0){
+            const list_langcode = Object.keys(langData)
+            if(list_langcode.includes(defaultLangcode)){
+                this.langcode = defaultLangcode
             }
-            else if(list_langcode.length > 0) {
-                defaultLangcode = list_langcode[0]
+            else {
+                this.langcode = list_langcode[0]
             }
             this.list_langcode = list_langcode
             this.langData = langData
-            this.langcode = defaultLangcode
         }
         else {
             this.langData = {}
@@ -22,17 +29,12 @@ class Text {
             return
         }
     }
-    #isObject(varible){
-        return typeof varible === 'object' &&
-            !Array.isArray(varible) &&
-            varible !== null
-    }
     get(id, bindData){
         if(typeof id != "string" && typeof id != "number") {
             return null
         }
-        const langcode = this.langcode
-        if(this.#isObject(this.langData[langcode]) && typeof this.langData[langcode][id] == "string"){
+        const langcode = this.getLangcode()
+        if(isObject(this.langData[langcode]) && typeof this.langData[langcode][id] == "string"){
             if(bindData){
                 return mm.render(this.langData[langcode][id], bindData)
             }
@@ -47,26 +49,27 @@ class Text {
         if(typeof text != "string") {
             return null
         }
-        const langcode = this.langcode
-        if(this.#isObject(this.langData[langcode])){
+        const langcode = this.getLangcode()
+        const get_name = (path, scope) => mm.get(scope, path) || path.replaceAll("_", " ")
+        if(isObject(this.langData[langcode])){
+            const scope = this.langData[langcode]
             if(bindData === null){
-                return mm.render(text, this.langData[langcode])
+                return mm.renderFn(text, get_name, scope)
             }
-            else {
-                return mm.render(text, bindData)
-            }
-        } else {
-            return id.replaceAll("_", " ")
+            return mm.render(text, Object.assign({}, scope, bindData))
         }
+        return mm.render(text, bindData)
     }
-    setLangcode(langcode){
-        if(this.list_langcode.includes(langcode)){
-            this.langcode = langcode
-            return true;
+    getLangcode(){
+        if(this.set_langcode_prop != this.langcode){
+            if(this.list_langcode.includes(this.set_langcode_prop)){
+                this.langcode = this.set_langcode_prop
+            }
+            else{
+                this.set_langcode_prop = this.langcode
+            }
         }
-        else{
-            return false
-        }
+        return this.langcode
     }
 }
 

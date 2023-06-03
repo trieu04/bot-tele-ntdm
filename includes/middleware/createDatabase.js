@@ -1,15 +1,29 @@
 const loglevel = require("loglevel")
+const Text = require("../utils/text")
 
-const updateLog = loglevel.getLogger("UPDATE")
 const dbLog = loglevel.getLogger("DB")
+
+const prase_json_column = (dataValue) => {
+    const regx = /^(.+)_json$/
+    const returnData = {}
+    for(columnName of Object.keys(dataValue)){
+        returnData[columnName] = dataValue[columnName]
+        let r = regx.exec(columnName)
+        if(r){
+            let prop = r[1]
+            returnData[prop] = JSON.parse(dataValue[columnName])
+        }
+    }
+    return returnData
+}
+
 const createDatabase = async (ctx, next) => {
-    
     // create user
     if (ctx.from) {
         const users_cache = globalThis.caches.users;
         const models = globalThis.db.models
         const id = ctx.from.id;
-        if(!users_cache.get(id)) {
+        if(!users_cache.has(id)) {
             let user_data = await models.TUsers.findOne({ where: {tg_id: id} });
             if(user_data) {
                 const cache_value = prase_json_column(user_data.dataValues)
@@ -27,12 +41,14 @@ const createDatabase = async (ctx, next) => {
                 users_cache.set(id, cache_value)
             }
         }
+        ctx.userData = users_cache.get(id)
+        Text.prototype.set_langcode_prop = ctx.userData.config.language_code
     }
     if (ctx.chat.type == "group" || ctx.chat.type == "supergroup"){
         const groups_cache = globalThis.caches.groups;
         const models = globalThis.db.models
         const id = ctx.chat.id;
-        if(!groups_cache.get(id)) {
+        if(!groups_cache.has(id)) {
             let group_data = await models.TGroups.findOne({ where: {tg_id: id} });
             if(group_data) {
                 const cache_value = prase_json_column(group_data.dataValues)
@@ -49,6 +65,7 @@ const createDatabase = async (ctx, next) => {
                 groups_cache.set(id, cache_value)
             }
         }
+        ctx.groupData = groups_cache.get(id)
     }
 
     // create message log
@@ -69,19 +86,5 @@ const createDatabase = async (ctx, next) => {
     
     next();
 };
-
-function prase_json_column(dataValue){
-    const regx = /^(.+)_json$/
-    const returnData = {}
-    for(columnName of Object.keys(dataValue)){
-        returnData[columnName] = dataValue[columnName]
-        let r = regx.exec(columnName)
-        if(r){
-            let prop = r[1]
-            returnData[prop] = JSON.parse(dataValue[columnName])
-        }
-    }
-    return returnData
-}
 
 module.exports = createDatabase;
