@@ -17,16 +17,18 @@ const saveSendedMessage = (bot, Telegram) => {
     }
 }
 
+const get_name = ({first_name, last_name}) => first_name + (last_name ? " " + last_name : "")
+
 function addMessageHistory(message){
     const models = globalThis.db.models
     const value = {
         message_id: message.message_id,
         from_tg_id: message.from.id,
-        from_name: message.from.first_name,
+        from_name: get_name(message.from),
         chat_id: message.chat.id,
-        chat_name: message.chat.type == "private" ? message.chat.first_name : message.chat.title,
+        chat_name: message.chat.type == "private" ? get_name(message.chat) : message.chat.title,
         text: message.text || "",
-        data: JSON.stringify(message)
+        data_json: JSON.stringify(message)
     }
     models.MessageHistory.create(value)
 }
@@ -35,11 +37,11 @@ async function editMessageHistory(message){
     const value = {
         message_id: message.message_id,
         from_tg_id: message.from.id,
-        from_name: message.from.first_name,
+        from_name: get_name(message.from),
         chat_id: message.chat.id,
-        chat_name: message.chat.type == "private" ? message.chat.first_name : message.chat.title,
+        chat_name: message.chat.type == "private" ? get_name(message.chat) : message.chat.title,
         text: message.text || "",
-        data: JSON.stringify(message)
+        data_json: JSON.stringify(message)
     }
     models.MessageHistory.update(value, {where: {message_id: message.message_id}});
 }

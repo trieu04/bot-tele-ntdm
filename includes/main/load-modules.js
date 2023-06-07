@@ -72,28 +72,30 @@ function requireModule(filename, reload = false) {
         if (globalThis.bot.commands.has(name || '')) { 
             throw new Error(text.get('name_exist'));
         }
+
+        const listDepc = command_module.config.dependencies
         
-        if (command_module.config.dependencies && typeof command_module.config.dependencies == 'object') {
-            for (let dependency in command_module.config.dependencies) {
+        if (listDepc && typeof listDepc == 'object') {
+            for (let depc in listDepc) {
                 if (!(
-                    listPackage.hasOwnProperty(dependency) ||
-                    listbuiltinModules.includes(dependency) ||
-                    globalThis.modules.dependencyList.includes(dependency)
+                    listPackage.hasOwnProperty(depc) ||
+                    listbuiltinModules.includes(depc) ||
+                    globalThis.modules.dependencyList.includes(depc)
                 )) {
-                    log.warn(text.get('not_found_package', {name: dependency, module: name}));
-                    let module_version = command_module.config.dependencies[dependency] == '*' || command_module.config.dependencies[dependency] == '' ? '' : '@' + command_module.config.dependencies[dependency]
-                    let command = 'npm --save install ' + dependency + module_version;
+                    log.warn(text.get('not_found_package', {name: depc, module: name}));
+                    let module_version = listDepc[depc] == '*' || listDepc[depc] == '' ? '' : '@' + listDepc[depc]
+                    let command = 'npm --save install ' + depc + module_version;
                     log.info("run:", command)
                     
                     execSync(command, { 'stdio': 'inherit', 'env': process.env, 'shell': true, 'cwd': join(globalThis.client.mainPath, '/modules')});
                     try {
                         // require.cache = {};
-                        globalThis.nodemodules[dependency] = require(dependency)
-                        globalThis.modules.dependencyList.push(dependency);
+                        globalThis.nodemodules[depc] = require(depc)
+                        globalThis.modules.dependencyList.push(depc);
 
                     } catch (e) {
                         log.error(e)
-                        throw text.get('can_not_install_package', {name, package: dependency})
+                        throw text.get('can_not_install_package', {name, package: depc})
                     }
                 }
             }
