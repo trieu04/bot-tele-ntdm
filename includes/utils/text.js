@@ -7,10 +7,7 @@ const isObject = (varible) => {
 }
 
 class Text {
-    constructor(langData){
-        const defaultLangcode = "en"
-        Text.prototype.set_langcode_prop = this.set_langcode_prop || defaultLangcode
-
+    constructor(langData, defaultLangcode = "en"){
         if(isObject(langData) && Object.keys(langData).length > 0){
             const list_langcode = Object.keys(langData)
             if(list_langcode.includes(defaultLangcode)){
@@ -30,10 +27,9 @@ class Text {
         }
     }
     get(id, bindData){
-        if(typeof id != "string" && typeof id != "number") {
+        if(typeof id != "string" && typeof id != "number")
             return null
-        }
-        const langcode = this.getLangcode()
+        const langcode = this.langcode
         if(isObject(this.langData[langcode]) && typeof this.langData[langcode][id] == "string"){
             if(bindData){
                 return mm.render(this.langData[langcode][id], bindData)
@@ -45,11 +41,11 @@ class Text {
             return id.replaceAll("_", " ")
         }
     }
+
     render(text, bindData = null){
-        if(typeof text != "string") {
+        if(typeof text != "string") 
             return null
-        }
-        const langcode = this.getLangcode()
+        const langcode = this.langcode
         const get_name = (path, scope) => mm.get(scope, path) || path.replaceAll("_", " ")
         if(isObject(this.langData[langcode])){
             const scope = this.langData[langcode]
@@ -60,16 +56,13 @@ class Text {
         }
         return mm.render(text, bindData)
     }
-    getLangcode(){
-        if(this.set_langcode_prop != this.langcode){
-            if(this.list_langcode.includes(this.set_langcode_prop)){
-                this.langcode = this.set_langcode_prop
-            }
-            else{
-                this.set_langcode_prop = this.langcode
-            }
+
+    setLangcode(langcode){
+        if(this.list_langcode.includes(langcode)){
+            this.langcode = langcode
+            return langcode
         }
-        return this.langcode
+        return null
     }
 }
 
