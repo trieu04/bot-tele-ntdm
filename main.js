@@ -8,6 +8,7 @@ globalThis.client = new Object({
     mainPath: process.cwd(),
     configPath: new String()
 });
+globalThis.bot = new Object()
 globalThis.cron = new Array()
 const NodeCache = require( "node-cache" );
 globalThis.caches = {
