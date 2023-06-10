@@ -4,7 +4,7 @@ require('dotenv').config()
 /// Global varible
 globalThis.client = new Object({
     version: '1.2.14',
-    timeStart: Date.now(),
+    timeStart: new Date(),
     mainPath: process.cwd(),
     configPath: new String()
 });
@@ -20,7 +20,7 @@ globalThis.caches = {
 /// logger
 require("./includes/main/logger")
 const logger = require("loglevel")
-const log = logger.getLogger("MAIN")
+const log = logger.getLogger("START")
 
 /// Module load status
 globalThis.loadStatus = []
@@ -52,25 +52,33 @@ async function startConnectDB(){
     } catch (error) {
         log.error(text.get('failed_connect_database'))
         log.error(error)
-        return false
+        exit(1)
     }
 }
 async function startBot(){
     const handleMessage = require("./includes/handle/handleMessage")
+    const handleCallbackQuery = require("./includes/handle/handleCallbackQuery")
     const createDatabase = require("./includes/middleware/createDatabase")
     const saveSendedMessage = require("./includes/bot/applySaveMessage")
 
-    const DEV_MODE = true
-    const token = DEV_MODE ? process.env.BOT_DEV_TOKEN : process.env.BOT_TOKEN
+    const mode = process.env.MODE
+
+    const token = (() => {
+        switch(mode.toLowerCase()){
+            case "prod": return PROD_BOT_TOKEN
+            case "dev": return DEV_BOT_TOKEN
+            case "prev": return PREV_BOT_TOKEN
+        }
+    })()
+
     const {Telegraf, Telegram} = require("telegraf")
 
-    const bot = new Telegraf(token);
+    const bot = new Telegraf(token)
     saveSendedMessage(bot, Telegram)
 
-    bot.use(createDatabase);
-    bot.on("message", async (ctx) => {
-        return handleMessage({ctx})
-    });
+    bot.use(createDatabase)
+    bot.on("message",  (ctx) => handleMessage({ctx}))
+    bot.on("callback_query", (ctx) => handleCallbackQuery({ctx}))
 
     bot.launch().catch(err => {
         log.error(err)
@@ -78,11 +86,8 @@ async function startBot(){
     })
 }
 
-async function START(){
-    if(!await startConnectDB()){
-        exit(1)
-    }
- 
+async function App(){
+    await startConnectDB()
     await startBot()
 }
-START()
+App()

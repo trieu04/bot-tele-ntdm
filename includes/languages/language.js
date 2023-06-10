@@ -11,9 +11,9 @@ const status = {
 }
 
 
-const { readdirSync, readFileSync, writeFileSync, existsSync, unlinkSync, rm } = require("fs-extra");
+const { readdirSync, readFileSync } = require("fs-extra");
 const loglevel = require('loglevel');
-const log = loglevel.getLogger("LANGUAGE")
+const log = loglevel.getLogger("START")
 const Text = require("../utils/text")
 
 const langFilename = readdirSync(globalThis.client.mainPath + '/includes/languages/data');

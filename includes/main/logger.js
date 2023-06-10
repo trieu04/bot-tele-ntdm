@@ -102,4 +102,4 @@ prefix.apply(log, {
 });
 
 
-log.getLogger("LOGGER").info("TIME OFFSET: UTC+07:00")
+log.getLogger("START").info("TIME OFFSET: UTC+07:00")

@@ -13,7 +13,7 @@ config = new Object()
 const { readdirSync, readFileSync, writeFileSync, existsSync, unlinkSync, rm } = require("fs-extra");
 const { join } = require("path");
 const loglevel = require('loglevel');
-const log = loglevel.getLogger("CONFIG")
+const log = loglevel.getLogger("START")
 try {
     globalThis.client.configPath = join(globalThis.client.mainPath, "/config.json");
     var configValue = require(globalThis.client.configPath);
