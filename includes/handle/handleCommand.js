@@ -56,7 +56,7 @@ const handleCommand = async function({ctx, command: {command_name, command_body}
         }
     }
 
-    if(run && command_module.flag == "disable"){
+    if(run && command_module.config.flag?.disabled){
         let reply = text.get("the_command_is_disabled", [mk.bold(command_name)])
         let p = ctx.telegram.sendMessage(chatID, reply, {parse_mode: "HTML"})
         promises.push(p)
@@ -66,18 +66,21 @@ const handleCommand = async function({ctx, command: {command_name, command_body}
     /////  Run
     if(run){
         try{
-            let p = await command_module.run({ ctx, command: {command_name, command_body} })
+            const language_code = ctx.userData.config.language_code
+            let p = await command_module.run({ ctx, command: {command_name, command_body}, language_code })
             promises.push(p)
         }
         catch (e){
             log.error(e)
-            command_module.flag = "disable"
+            if(!command_module.config.flag || typeof command_module.config.flag != "object")
+                command_module.config.flag = {}
+            command_module.config.flag.disabled = true;
             let reply = text.get("an_error_has_occurred", [mk.bold(command_name)])
             let p = ctx.telegram.sendMessage(chatID, reply, {parse_mode: "HTML"})
             promises.push(p)
         }
-        return Promise.all(promises)
     }
+    return Promise.all(promises)
 
 }
 module.exports = handleCommand
