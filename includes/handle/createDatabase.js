@@ -1,5 +1,5 @@
 const Text = require("../utils/text")
-const {praseJsonColumn, stringifyJsonColumn} = require("../bot/jsonColumnHandle")
+const {praseJsonColumn, stringifyJsonColumn} = require("../database/jsonColumnHandle")
 
 
 const createDatabase = async (ctx, next) => {

@@ -58,7 +58,7 @@ async function startConnectDB(){
 async function startBot(){
     const handleMessage = require("./includes/handle/handleMessage")
     const handleCallbackQuery = require("./includes/handle/handleCallbackQuery")
-    const createDatabase = require("./includes/middleware/createDatabase")
+    const createDatabase = require("./includes/handle/createDatabase")
     const saveSendedMessage = require("./includes/bot/applySaveMessage")
 
     const mode = process.env.MODE
