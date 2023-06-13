@@ -72,15 +72,17 @@ const handleCommand = async function({ctx, command: {command_name, command_body}
         }
         catch (e){
             log.error(e)
-            if(!command_module.config.flag || typeof command_module.config.flag != "object")
-                command_module.config.flag = {}
-            command_module.config.flag.disabled = true;
+            // if(!command_module.config.flag || typeof command_module.config.flag != "object")
+            //     command_module.config.flag = {}
+            // command_module.config.flag.disabled = true;
             let reply = text.get("an_error_has_occurred", [mk.bold(command_name)])
             let p = ctx.telegram.sendMessage(chatID, reply, {parse_mode: "HTML"})
             promises.push(p)
         }
     }
+
     return Promise.all(promises)
 
 }
+
 module.exports = handleCommand

@@ -4,55 +4,39 @@ const handleCommand = require("./handleCommand")
 const handlePhoto = require("./handlePhoto")
 const handleMessage = async function ({ctx}) {
 
-    
-    // ctx.update == {
-    //         "update_id": 410243562,
-    //         "message": {
-    //             "message_id": 1964,
-    //             "from": {
-    //                 "id": 1455276034,
-    //                 "is_bot": false,
-    //                 "first_name": "Trieu",
-    //                 "username": "QuocTrieuDev",
-    //                 "language_code": "vi"
-    //             },
-    //             "chat": {
-    //                 "id": 1455276034,
-    //                 "first_name": "Trieu",
-    //                 "username": "QuocTrieuDev",
-    //                 "type": "private"
-    //             },
-    //             "date": 1671936545,
-    //             "text": "lmao"
-    //         }
-    // }
-
-
     if(ctx.update.message.hasOwnProperty('text')){
         const message_text = ctx.update.message.text;
         // check command
         const prefix = "/"
-        const regex = new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\S*`)
-        const match = message_text.match(regex)
-        if (match !== null) { // is command
-            const command_name = 
-                match[0]
-                    .substring(prefix.length)
-                    .replace(new RegExp("@" + ctx.botInfo.username + "$"), "")
+        const prefix_safe_regex = prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        const command_match = message_text.match(new RegExp(`^${prefix_safe_regex}(\\S+)`))
+        if (command_match !== null) { // is command
+            let command_name, command_body;
+            const tag = command_match[1].match(new RegExp(`^(.+)@(.+)$`))
+            if(tag !== null){
+                if(tag[2] == ctx.botInfo.username){ // is tagert to this bot
+                    command_name = tag[1]
+                }
+                else {
+                    return false
+                }
+            }
+            else {
+                command_name = command_match[1]
+            }
 
-            const command_body = 
-                message_text
-                    .substring(match[0].length)
-                    .trim()
+            command_body = message_text.substring(command_match[0].length).trim()
 
-            const command = {command_name, command_body}
-            return handleCommand({ctx, command})
+            return handleCommand({ctx, command: {command_name, command_body}})
         }
+
+        return false
     }
+
+
     if(ctx.update.message.hasOwnProperty('photo')){
         return handlePhoto({ctx})
     }
-    
 
 }
 
