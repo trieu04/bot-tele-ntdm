@@ -39,6 +39,10 @@ handleStatus(language.status)
 /// Load modules
 require("./includes/main/load-modules")();
 
+/// Error notification
+
+const ErrorNotification = require("./includes/main/error-notification")
+
 async function startConnectDB(){
     const db = require("./includes/database/db-mysql");
     const text = globalThis.text
@@ -65,16 +69,25 @@ async function startBot(){
 
     const token = (() => {
         switch(mode.toLowerCase()){
-            case "prod": return PROD_BOT_TOKEN
-            case "dev": return DEV_BOT_TOKEN
-            case "prev": return PREV_BOT_TOKEN
+            case "prod": return process.env.PROD_BOT_TOKEN
+            case "dev": return process.env.DEV_BOT_TOKEN
+            case "prev": return process.env.PREV_BOT_TOKEN
         }
     })()
 
     const {Telegraf, Telegram} = require("telegraf")
 
     const bot = new Telegraf(token)
+    
     saveSendedMessage(bot, Telegram)
+
+    const errorNotification = new ErrorNotification({sendTo:{
+        telegram: {
+            ctx: bot,
+            chatID: globalThis.config.GROUP_STATUS
+        }
+    }})
+    globalThis.errorNotification = errorNotification
 
     bot.use(createDatabase)
     bot.on("message",  (ctx) => handleMessage({ctx}))
